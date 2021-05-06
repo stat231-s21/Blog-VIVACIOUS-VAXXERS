@@ -29,3 +29,24 @@ AD_race_depression_L <- AD_race_depression %>%
     values_from = c("Value", "Low CI", "High CI", "Confidence Interval")
   ) %>% 
   mutate(Value_1 = readr::parse_number(as.character(Value_1)))
+
+#formatting AD_race_anxiety into wide format
+AD_race_anxiety_L <- AD_race_anxiety %>% 
+  pivot_wider(
+    id_cols = Subgroup, 
+    names_from = "Time Period",
+    names_sep = "_",
+    values_from = c("Value", "Low CI", "High CI", "Confidence Interval")
+  ) %>% 
+  mutate(Value_1 = readr::parse_number(as.character(Value_1)))
+
+#formatting AD_race_both into wide format
+AD_race_both_L <- AD_race_both %>% 
+  pivot_wider(
+    id_cols = Subgroup, 
+    names_from = "Time Period",
+    names_sep = "_",
+    values_from = c("Value", "Low CI", "High CI", "Confidence Interval")
+  ) %>% 
+  mutate(Value_1 = readr::parse_number(as.character(Value_1)))
+
