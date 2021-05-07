@@ -1,4 +1,3 @@
-
 library(readr)
 library(tidyverse)
 library(DT)
@@ -9,7 +8,8 @@ View(AD)
 
 AD_race <- AD %>% 
   filter(Group == "By Race/Hispanic ethnicity") %>% 
-  select(-Group, -State, -Phase, -'Time Period Label', -'Time Period Start Date', -'Time Period End Date')
+  select(-Group, -State, -Phase, -'Time Period Label', -'Time Period Start Date', 
+         -'Time Period End Date', -'Confidence Interval')
 
 #splitting AD_race dataset by Indicator  
 AD_race_depression <- AD_race %>% 
@@ -26,9 +26,10 @@ AD_race_depression_L <- AD_race_depression %>%
     id_cols = Subgroup, 
     names_from = "Time Period",
     names_sep = "_",
-    values_from = c("Value", "Low CI", "High CI", "Confidence Interval")
+    values_from = c("Value", "Low CI", "High CI")
   ) %>% 
-  mutate(Value_1 = readr::parse_number(as.character(Value_1)))
+  # choosing our start date of the data we want to examine to be May 2020
+  select(-Value_1, -`Low CI_1`, -`High CI_1`)
 
 #formatting AD_race_anxiety into wide format
 AD_race_anxiety_L <- AD_race_anxiety %>% 
@@ -36,9 +37,9 @@ AD_race_anxiety_L <- AD_race_anxiety %>%
     id_cols = Subgroup, 
     names_from = "Time Period",
     names_sep = "_",
-    values_from = c("Value", "Low CI", "High CI", "Confidence Interval")
+    values_from = c("Value", "Low CI", "High CI")
   ) %>% 
-  mutate(Value_1 = readr::parse_number(as.character(Value_1)))
+  select(-Value_1, -`Low CI_1`, -`High CI_1`)
 
 #formatting AD_race_both into wide format
 AD_race_both_L <- AD_race_both %>% 
@@ -46,7 +47,6 @@ AD_race_both_L <- AD_race_both %>%
     id_cols = Subgroup, 
     names_from = "Time Period",
     names_sep = "_",
-    values_from = c("Value", "Low CI", "High CI", "Confidence Interval")
+    values_from = c("Value", "Low CI", "High CI")
   ) %>% 
-  mutate(Value_1 = readr::parse_number(as.character(Value_1)))
-
+  select(-Value_1, -`Low CI_1`, -`High CI_1`)
