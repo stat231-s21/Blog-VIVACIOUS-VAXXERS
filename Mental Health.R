@@ -13,7 +13,7 @@ AD <- read_csv("data/Indicators_of_Anxiety_or_Depression_Based_on_Reported_Frequ
 	select(-Group, -State, -Phase, -'Time Period Label', -'Time Period Start Date', 
 				 -'Time Period End Date', -'Confidence Interval') %>% 
 	filter(Indicator == "Symptoms of Depressive Disorder") %>% 
-	select(-Indicator, -'Quartile Range')
+	select(-Indicator, -'Quartile Range') 
 
 
 ##########################################################################
@@ -28,10 +28,10 @@ value_values <- c("Value_2", "Value_3", "Value_4", "Value_5", "Value_6", "Value_
 						"Value_8", "Value_9", "Value_10", "Value_11", "Value_12", "Value_13", "Value_14",
 						"Value_15", "Value_16", "Value_17", "Value_18", "Value_19", "Value_20", "Value_21",
 						"Value_22", "Value_23", "Value_24", "Value_25", "Value_26", "Value_27", "Value_28")
-value_names <- c("Value_2", "Value_3", "Value_4", "Value_5", "Value_6", "Value_7", 
-					 "Value_8", "Value_9", "Value_10", "Value_11", "Value_12", "Value_13", "Value_14",
-					 "Value_15", "Value_16", "Value_17", "Value_18", "Value_19", "Value_20", "Value_21",
-					 "Value_22", "Value_23", "Value_24", "Value_25", "Value_26", "Value_27", "Value_28")
+value_names <- c("Period 2", "Period 3", "Period 4", "Period 5", "Period 6", "Period 7", 
+					 "Period 8", "Period 9", "Period 10", "Period 11", "Period 12", "Period 13", "Period 14",
+					 "Period 15", "Period 16", "Period 17", "Period 18", "Period 19", "Period 20", "Period 21",
+					 "Period 22", "Period 23", "Period 24", "Period 25", "Period 26", "Period 27", "Period 28")
 names(value_values) <- value_names
 
 ##########################################################################

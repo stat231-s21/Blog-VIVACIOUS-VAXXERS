@@ -1,0 +1,228 @@
+---
+title: "Twitter Analytics"
+author: "Ayo Lewis, Brandon Kwon, and Clara Seo"
+date: "5/10/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mosaic)
+library(dplyr)
+library(tidyverse)
+```
+
+## Why Twitter
+
+
+## Rise of Social Media
+
+
+## Mining Tweets
+
+```{r}
+#package to extract tweets
+library("rtweet")
+
+# set up authentication to connect to Twitter
+twitter_token <- create_token(
+  app = ,
+  consumer_key = , 
+  consumer_secret = ,
+  set_renv = TRUE)
+```
+
+```{r}
+# search for tweets 
+climate <- search_tweets("climate"
+                         , n=1000
+                         , include_rts=FALSE
+                         , lang="en")
+
+# search for a specific user account 
+Gates <- get_timeline("@BillGates", n=3200)
+```
+
+
+```{r}
+# Remove retweets
+Gates_tweets_organic <- Gates_tweets[Gates_tweets$is_retweet==FALSE, ] 
+
+# Remove replies
+Gates_tweets_organic <- subset(Gates_tweets_organic
+                               , is.na(Gates_tweets_organic$reply_to_status_id)) 
+
+# Analyze engagement based on favorites and retweets
+Gates_tweets_organic <- Gates_tweets_organic %>% 
+  arrange(-favorite_count)
+Gates_tweets_organic[1,5]
+
+Gates_tweets_organic <- Gates_tweets_organic %>% 
+  arrange(-retweet_count)
+Gates_tweets_organic[1,5]
+```
+
+```{r}
+# Keeping only the retweets
+Gates_retweets <- Gates_tweets[Gates_tweets$is_retweet==TRUE,]
+
+# Keeping only the replies
+Gates_replies <- subset(Gates_tweets, !is.na(Gates_tweets$reply_to_status_id))
+
+# Creating a data frame
+data <- data.frame(
+  category=c("Organic", "Retweets", "Replies"),
+  count=c(2856, 192, 120)
+)
+
+# Adding columns 
+data$fraction = data$count / sum(data$count)
+data$percentage = data$count / sum(data$count) * 100
+data$ymax = cumsum(data$fraction)
+data$ymin = c(0, head(data$ymax, n=-1))
+
+# Rounding the data to two decimal points
+data <- round_df(data, 2)
+
+# Specify what the legend should say
+Type_of_Tweet <- paste(data$category, data$percentage, "%")
+
+# Show ratio of replies/retweets/organic tweets
+ggplot(data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Type_of_Tweet)) +
+  geom_rect() +
+  coord_polar(theta="y") + 
+  xlim(c(2, 4)) +
+  theme_void() +
+  theme(legend.position = "right")
+```
+
+```{r}
+# Show when the tweets are published
+colnames(Gates_tweets)[colnames(Gates_tweets)=="screen_name"] <- "Twitter_Account"
+
+ts_plot(dplyr::group_by(Gates_tweets, Twitter_Account), "year") +
+  ggplot2::theme_minimal() +
+  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold")) +
+  ggplot2::labs(
+    x = NULL, y = NULL,
+    title = "Frequency of Tweets from Bill Gates",
+    subtitle = "Tweet counts aggregated by year",
+    caption = "\nSource: Data collected from Twitter's REST API via rtweet"
+  )
+```
+
+```{r}
+# Show from where the tweets are published
+Gates_app <- Gates_tweets %>% 
+  select(source) %>% 
+  group_by(source) %>%
+  summarize(count=n())
+Gates_app <- subset(Gates_app, count > 11)
+
+Gates_app <- Gates_tweets %>% 
+  select(source) %>% 
+  group_by(source) %>%
+  summarize(count=n())
+Gates_app <- subset(Gates_app, count > 11)
+
+data <- data.frame(
+  category=Gates_app$source,
+  count=Gates_app$count
+)
+data$fraction = data$count / sum(data$count)
+data$percentage = data$count / sum(data$count) * 100
+data$ymax = cumsum(data$fraction)
+data$ymin = c(0, head(data$ymax, n=-1))
+data <- round_df(data, 2)
+Source <- paste(data$category, data$percentage, "%")
+ggplot(data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Source)) +
+  geom_rect() +
+  coord_polar(theta="y") + # Try to remove that to understand how the chart is built initially
+  xlim(c(2, 4)) +
+  theme_void() +
+  theme(legend.position = "right")
+```
+
+
+```{r}
+# Show the most frequent words found in the tweets
+
+# reomve hyperlinks, @ mentions or punctuations
+Gates_tweets_organic$text <-  gsub("https\\S*", "", Gates_tweets_organic$text)
+Gates_tweets_organic$text <-  gsub("@\\S*", "", Gates_tweets_organic$text) 
+Gates_tweets_organic$text <-  gsub("amp", "", Gates_tweets_organic$text) 
+Gates_tweets_organic$text <-  gsub("[\r\n]", "", Gates_tweets_organic$text)
+Gates_tweets_organic$text <-  gsub("[[:punct:]]", "", Gates_tweets_organic$text)
+
+# remove stop words
+tweets <- Gates_tweets_organic %>%
+  select(text) %>%
+  unnest_tokens(word, text)
+tweets <- tweets %>%
+  anti_join(stop_words)
+
+# gives you a bar chart of the most frequent words found in the tweets
+tweets %>% 
+  count(word, sort = TRUE) %>%
+  top_n(15) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(x = word, y = n)) +
+  geom_col() +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "Count",
+       x = "Unique words",
+       title = "Most frequent words found in the tweets of Bill Gates",
+       subtitle = "Stop words removed from the list")
+```
+
+```{r}
+# Show the most frequently used hashtags
+Gates_tweets_organic$hashtags <- as.character(Gates_tweets_organic$hashtags)
+Gates_tweets_organic$hashtags <- gsub("c\\(", "", Gates_tweets_organic$hashtags)
+set.seed(1234)
+wordcloud(Gates_tweets_organic$hashtags, min.freq=5, scale=c(3.5, .5), random.order=FALSE, rot.per=0.35,
+          colors=brewer.pal(8, "Dark2"))
+```
+
+```{r}
+# Show the accounts from which most retweets originate 
+set.seed(1234)
+wordcloud(Gates_retweets$retweet_screen_name, min.freq=3, scale=c(2, .5), random.order=FALSE, rot.per=0.25, 
+          colors=brewer.pal(8, "Dark2"))
+```
+
+### Sentiment Analysis
+
+- capture the tone of your tweets and understand how they balance out 
+
+```{r}
+library(syuzhet)
+# Converting tweets to ASCII to trackle strange characters
+tweets <- iconv(tweets, from="UTF-8", to="ASCII", sub="")
+# removing retweets, in case needed 
+tweets <-gsub("(RT|via)((?:\\b\\w*@\\w+)+)","",tweets)
+# removing mentions, in case needed
+tweets <-gsub("@\\w+","",tweets)
+ew_sentiment<-get_nrc_sentiment((tweets))
+sentimentscores<-data.frame(colSums(ew_sentiment[,]))
+names(sentimentscores) <- "Score"
+sentimentscores <- cbind("sentiment"=rownames(sentimentscores),sentimentscores)
+rownames(sentimentscores) <- NULL
+ggplot(data=sentimentscores,aes(x=sentiment,y=Score))+
+  geom_bar(aes(fill=sentiment),stat = "identity")+
+  theme(legend.position="none")+
+  xlab("Sentiments")+ylab("Scores")+
+  ggtitle("Total sentiment based on scores")+
+  theme_minimal()
+```
+
+source: https://www.tidytextmining.com/sentiment.html 
+
+```{r}
+library(dplyr)
+library(stringr)
+library(tidyr)
+library(ggplot2)
+```
+
