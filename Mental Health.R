@@ -9,7 +9,7 @@ library(ggplot2)
 ##########################################################################
 ############################## import data ###############################
 ##########################################################################
-AD <- read_csv("~/Spring 2021/Data Science - STAT 231/Blog-VIVACIOUS-VAXXERS/Mental Health/AD.csv") %>%
+AD <- read_csv("AD.csv") %>%
 	rename("Time_Period" = "Time Period") %>%
 	mutate("Time_Character" = as.character(Time_Period))
 
@@ -29,7 +29,7 @@ timeperiod_choices <- unique(AD$Time_Period)
 ################################    ui    ################################
 ##########################################################################
 ui <- navbarPage(
-	title = "COVID-19's Impact on Anxiety and Depression by Race",
+	title = "COVID-19's Potential Impact on Anxiety and Depression by Race",
 	
 	tabPanel(
 		title = "Time Series Line Graph",
@@ -89,7 +89,8 @@ server <- function(input, output){
 	
 	output$line <- renderPlot({
 		ggplot(data = AD_reactive(), aes(x = Time_Period, y = Value)) +
-			geom_line(color = Color_reactive()) + geom_point(color = Color_reactive()) + labs(x = "Time Period", y = "Value of Depression/Anxiety")
+			geom_line(color = Color_reactive()) + geom_point(color = Color_reactive()) + labs(x = "Time Period", 
+																																												y  = "% of Individuals Who Have Depression/Anxiety")
 	})
 	
 	
@@ -101,7 +102,8 @@ server <- function(input, output){
 	
 	output$bar <- renderPlot({
 		ggplot(data = AD_reactive_b(), aes(x = Subgroup, y = Value)) +
-			geom_bar(stat = "identity") + labs(x = "Subgroup", y = "Value of Depression/Anxiety") + 
+			geom_bar(stat = "identity") + labs(x = "Subgroup", y = "% of Individuals
+																				 Who Have Depression/Anxiety") + 
 			theme(axis.text.x = element_text(angle = 90))
 	})
 }
