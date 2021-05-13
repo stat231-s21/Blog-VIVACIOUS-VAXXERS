@@ -1,0 +1,141 @@
+"","Subgroup","Time Period","Value","Low CI","High CI"
+"1","Hispanic or Latino",1,29.4,26.8,32.1
+"2","Non-Hispanic White, single race",1,21.4,20.6,22.1
+"3","Non-Hispanic Black, single race",1,25.6,23.7,27.5
+"4","Non-Hispanic Asian, single race",1,23.6,20.3,27.1
+"5","Non-Hispanic, other races and multiple races",1,28.3,24.8,32
+"6","Hispanic or Latino",2,27.9,24.4,31.6
+"7","Non-Hispanic White, single race",2,22.5,21.6,23.4
+"8","Non-Hispanic Black, single race",2,27.7,23.8,31.9
+"9","Non-Hispanic Asian, single race",2,19.5,15.4,24.3
+"10","Non-Hispanic, other races and multiple races",2,33,28.6,37.7
+"11","Hispanic or Latino",3,28.9,26.5,31.4
+"12","Non-Hispanic White, single race",3,22.7,22,23.5
+"13","Non-Hispanic Black, single race",3,28.5,26.5,30.6
+"14","Non-Hispanic Asian, single race",3,20.9,17.8,24.2
+"15","Non-Hispanic, other races and multiple races",3,27.1,23.9,30.6
+"16","Hispanic or Latino",4,31.4,28.4,34.4
+"17","Non-Hispanic White, single race",4,23.3,22.4,24.2
+"18","Non-Hispanic Black, single race",4,24.8,22.6,27
+"19","Non-Hispanic Asian, single race",4,19.5,17,22.2
+"20","Non-Hispanic, other races and multiple races",4,32.2,28.3,36.3
+"21","Hispanic or Latino",5,26.3,24.6,28.1
+"22","Non-Hispanic White, single race",5,23.7,22.9,24.4
+"23","Non-Hispanic Black, single race",5,29.9,27.7,32.2
+"24","Non-Hispanic Asian, single race",5,22,19.5,24.7
+"25","Non-Hispanic, other races and multiple races",5,37.6,33.3,42
+"26","Hispanic or Latino",6,30.8,28.4,33.3
+"27","Non-Hispanic White, single race",6,23.9,22.9,24.8
+"28","Non-Hispanic Black, single race",6,29.6,27.1,32.2
+"29","Non-Hispanic Asian, single race",6,19.8,16.7,23.2
+"30","Non-Hispanic, other races and multiple races",6,33.9,30.4,37.5
+"31","Hispanic or Latino",7,28.4,25.5,31.5
+"32","Non-Hispanic White, single race",7,23.5,22.6,24.6
+"33","Non-Hispanic Black, single race",7,28.3,25.8,30.9
+"34","Non-Hispanic Asian, single race",7,21,16.9,25.5
+"35","Non-Hispanic, other races and multiple races",7,32.3,28.4,36.4
+"36","Hispanic or Latino",8,29,26.6,31.4
+"37","Non-Hispanic White, single race",8,24.2,23.5,25
+"38","Non-Hispanic Black, single race",8,28.1,26,30.3
+"39","Non-Hispanic Asian, single race",8,20.1,17.4,23.1
+"40","Non-Hispanic, other races and multiple races",8,34.1,29.9,38.5
+"41","Hispanic or Latino",9,31.1,29,33.2
+"42","Non-Hispanic White, single race",9,24.9,24.1,25.8
+"43","Non-Hispanic Black, single race",9,30.9,28.6,33.2
+"44","Non-Hispanic Asian, single race",9,21.5,18.6,24.7
+"45","Non-Hispanic, other races and multiple races",9,36.8,33.2,40.4
+"46","Hispanic or Latino",10,30.9,29,32.8
+"47","Non-Hispanic White, single race",10,26,25.3,26.7
+"48","Non-Hispanic Black, single race",10,29.9,27.5,32.3
+"49","Non-Hispanic Asian, single race",10,25,22.2,28
+"50","Non-Hispanic, other races and multiple races",10,35.6,32.3,39
+"51","Hispanic or Latino",11,31,28.5,33.6
+"52","Non-Hispanic White, single race",11,26.6,25.8,27.4
+"53","Non-Hispanic Black, single race",11,30,28,32
+"54","Non-Hispanic Asian, single race",11,26.4,22.2,30.9
+"55","Non-Hispanic, other races and multiple races",11,36.1,32.3,40
+"56","Hispanic or Latino",12,34.2,31.8,36.7
+"57","Non-Hispanic White, single race",12,27.7,26.8,28.6
+"58","Non-Hispanic Black, single race",12,32.1,29.7,34.6
+"59","Non-Hispanic Asian, single race",12,30.5,26.9,34.2
+"60","Non-Hispanic, other races and multiple races",12,33,29,37.2
+"61","Hispanic or Latino",13,28.5,26.8,30.1
+"62","Non-Hispanic White, single race",13,23.2,22.6,23.8
+"63","Non-Hispanic Black, single race",13,26.2,24.1,28.4
+"64","Non-Hispanic Asian, single race",13,20.8,18.8,22.9
+"65","Non-Hispanic, other races and multiple races",13,30.3,27.4,33.4
+"66","Hispanic or Latino",14,28.9,27.5,30.5
+"67","Non-Hispanic White, single race",14,22.7,22,23.3
+"68","Non-Hispanic Black, single race",14,28.5,26.7,30.4
+"69","Non-Hispanic Asian, single race",14,19.1,17.3,21
+"70","Non-Hispanic, other races and multiple races",14,31.4,28.6,34.4
+"71","Hispanic or Latino",15,31,28.6,33.4
+"72","Non-Hispanic White, single race",15,23.4,22.8,24
+"73","Non-Hispanic Black, single race",15,25.8,23.8,27.8
+"74","Non-Hispanic Asian, single race",15,21,18.7,23.5
+"75","Non-Hispanic, other races and multiple races",15,31.4,28.5,34.4
+"76","Hispanic or Latino",16,31.5,28.9,34.2
+"77","Non-Hispanic White, single race",16,23.3,22.7,23.9
+"78","Non-Hispanic Black, single race",16,29.2,27.1,31.4
+"79","Non-Hispanic Asian, single race",16,19,17.1,21.1
+"80","Non-Hispanic, other races and multiple races",16,33.6,30.4,37
+"81","Hispanic or Latino",17,31.3,29.4,33.2
+"82","Non-Hispanic White, single race",17,24,23.3,24.7
+"83","Non-Hispanic Black, single race",17,28.7,26.7,30.8
+"84","Non-Hispanic Asian, single race",17,23.1,20.4,26
+"85","Non-Hispanic, other races and multiple races",17,34.4,31.1,37.7
+"86","Hispanic or Latino",18,33.5,30.7,36.4
+"87","Non-Hispanic White, single race",18,25.4,24.5,26.2
+"88","Non-Hispanic Black, single race",18,34,31,37.1
+"89","Non-Hispanic Asian, single race",18,21.8,18.7,25.2
+"90","Non-Hispanic, other races and multiple races",18,33.4,29.7,37.2
+"91","Hispanic or Latino",19,32.5,30.2,34.8
+"92","Non-Hispanic White, single race",19,27,26.2,27.8
+"93","Non-Hispanic Black, single race",19,31.4,28.9,34.1
+"94","Non-Hispanic Asian, single race",19,23.2,20.4,26.2
+"95","Non-Hispanic, other races and multiple races",19,38.5,34.6,42.5
+"96","Hispanic or Latino",20,33.1,30.6,35.7
+"97","Non-Hispanic White, single race",20,27.2,26.3,28
+"98","Non-Hispanic Black, single race",20,32.2,30.2,34.3
+"99","Non-Hispanic Asian, single race",20,25.7,22.8,28.8
+"100","Non-Hispanic, other races and multiple races",20,35,32.4,37.7
+"101","Hispanic or Latino",21,33,30.8,35.2
+"102","Non-Hispanic White, single race",21,28.8,28.1,29.5
+"103","Non-Hispanic Black, single race",21,35.2,32.6,37.9
+"104","Non-Hispanic Asian, single race",21,24,20.8,27.5
+"105","Non-Hispanic, other races and multiple races",21,37.3,33.9,40.8
+"106","Hispanic or Latino",22,29.6,27.4,31.9
+"107","Non-Hispanic White, single race",22,27.4,26.6,28.3
+"108","Non-Hispanic Black, single race",22,31.2,28.3,34.2
+"109","Non-Hispanic Asian, single race",22,23.6,21.2,26
+"110","Non-Hispanic, other races and multiple races",22,37.2,32.9,41.6
+"111","Hispanic or Latino",23,32.1,30,34.3
+"112","Non-Hispanic White, single race",23,26.9,26.3,27.5
+"113","Non-Hispanic Black, single race",23,31,28.4,33.7
+"114","Non-Hispanic Asian, single race",23,26.2,22.8,29.7
+"115","Non-Hispanic, other races and multiple races",23,34.5,31,38.2
+"116","Hispanic or Latino",24,32.7,30.6,35
+"117","Non-Hispanic White, single race",24,26.2,25.5,26.9
+"118","Non-Hispanic Black, single race",24,31.1,28.6,33.7
+"119","Non-Hispanic Asian, single race",24,26.9,24.3,29.6
+"120","Non-Hispanic, other races and multiple races",24,33.2,30.1,36.4
+"121","Hispanic or Latino",25,29.5,27.6,31.6
+"122","Non-Hispanic White, single race",25,26.6,25.7,27.6
+"123","Non-Hispanic Black, single race",25,31.3,29,33.8
+"124","Non-Hispanic Asian, single race",25,25.2,22.2,28.5
+"125","Non-Hispanic, other races and multiple races",25,35,31.8,38.2
+"126","Hispanic or Latino",26,28.2,25.9,30.7
+"127","Non-Hispanic White, single race",26,25.3,24.8,25.9
+"128","Non-Hispanic Black, single race",26,28.7,26.3,31.3
+"129","Non-Hispanic Asian, single race",26,21.7,18.7,25
+"130","Non-Hispanic, other races and multiple races",26,35.8,32.3,39.4
+"131","Hispanic or Latino",27,28.3,26.1,30.7
+"132","Non-Hispanic White, single race",27,22.8,22.1,23.6
+"133","Non-Hispanic Black, single race",27,27,24.2,30
+"134","Non-Hispanic Asian, single race",27,24.7,21.4,28.2
+"135","Non-Hispanic, other races and multiple races",27,34.9,31.8,38
+"136","Hispanic or Latino",28,29.3,26.3,32.3
+"137","Non-Hispanic White, single race",28,21.2,20.4,22
+"138","Non-Hispanic Black, single race",28,24.7,22.2,27.2
+"139","Non-Hispanic Asian, single race",28,18.5,16.4,20.8
+"140","Non-Hispanic, other races and multiple races",28,28.7,25.2,32.4
