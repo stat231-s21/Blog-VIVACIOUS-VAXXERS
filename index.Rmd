@@ -39,8 +39,11 @@ For our final project, we will not be building upon our mid-semester project, bu
 
 # Research Questions
 By analyzing both demographic, health, and social data (such as social media metrics), our group aims to explore how the past pandemic year has impacted both the mental and physical health of our chosen population. Our guiding questions are:
-1. How has the pandemic impacted access to  healthcare/social services?
+
+1. How has the pandemic impacted access to healthcare/social services?
+
 2. How has the pandemic impacted mental health?
+
 3. Have popular social movements such as [#StopAsianHate](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) or [#BlackLivesMatter](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) had an impact on health outcomes?
 
 # Why focus on COVID-19
