@@ -10,161 +10,369 @@ knitr::opts_chunk$set(echo = TRUE)
 library(mosaic)
 library(dplyr)
 library(tidyverse)
+library(tidytext)
+library(janitor)
+library(wordcloud)
+library(textdata)
+library(readr)
+library(rtweet) # extract tweets
 ```
+
+
+## Rise of Social Media during the Pandemic
+
+A pandemic, the death of George Floyd, the rise of hate crimes, and a presidential election called Americans to action. These events aggregated into a surging movement of activism that called for social change. The pandemic added a level of complexity (i.e., lockdowns and movement restrictions) that ultimately resulted in many of these calls to action to take place online. 
+
+The past 15 months proved that social media can be an agent of change beyond advertisements and awareness. We all witnessed the riveting rise of digital activism nationwide during a pandemic. Users feel that they have a safe space to interact, feel connected, be comforted, distract themselves, stay engaged, and find inspiration - without any risk of contagion. People are staying at home without much to do except to watch Netflix and go on Twitter. 
+
+Activism and protest thrived in digital spaces
+
+Harness social media to demand justice. 
 
 ## Why Twitter
 
+Twitter allows for greater visibility to social movements. 
+The entry costs are low (free to make an account). 
 
-## Rise of Social Media
+Twitter is among the top 3 social networking apps in the US with 353.1 million monthly and 192 million daily active users currently (February 2021). Twitter generates vast amounts of user-generated language data, making it the perfect platform to conduct textual/sentiment analysis. Twitter has considerable advantages over other social media platforms (e.g., Instagram, Facebook, TikTok) for analysis: 
 
+1) Every tweet is limited to a maximum of 280 characters, which provides us with a relatively homogeneous corpora.
+
+2) There are millions of active users that post tweets and retweet/favorite/comment on organic tweets, which generates an accessible and large data sample. 
+
+3) The tweets are publicly available, accessible, and retrievable via APIs. 
 
 ## Mining Tweets
 
-```{r}
-#package to extract tweets
-library("rtweet")
-
+```{r twitter token}
 # set up authentication to connect to Twitter
 twitter_token <- create_token(
-  app = ,
-  consumer_key = , 
-  consumer_secret = ,
+  app = "VivaciousVaxxers",
+  consumer_key = "FMy4Oep9T9VyFwsZwECghMqDX", 
+  consumer_secret = "6PkoT9GDZmnQDMibI4ZwegqsvmNR8mZ7n1YgkLIJ1ta5OriA62",
+  access_token = "1608462002-eFkTlANzGoT8SVYVB1ICXmHD7fXUSZHJK99iNCy",
+  access_secret = "ru4laGquGEb5ebn8ATSg9vLEvkEClg2dGm75lCcI9dd25", 
   set_renv = TRUE)
 ```
 
-```{r}
-# search for tweets 
-climate <- search_tweets("climate"
-                         , n=1000
-                         , include_rts=FALSE
-                         , lang="en")
+```{r search_tweets}
+# search for tweets, save as csv files 
+covid19 <- search_tweets("#covid19", n=18000, include_rts=FALSE, lang="en")
+covid19 <- select(covid19, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(covid19, file = "data/twitter_data/twitter_covid19.csv")
 
-# search for a specific user account 
-Gates <- get_timeline("@BillGates", n=3200)
+vaccine <- search_tweets("vaccine", n=18000, include_rts=FALSE, lang="en")
+vaccine <- select(vaccine, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(vaccine, file = "data/twitter_data/twitter_vaccine.csv")
+
+coronavirus <- search_tweets("#coronavirus", n=18000, include_rts=FALSE, lang="en")
+coronavirus <- select(coronavirus, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(coronavirus, file = "data/twitter_data/twitter_coronavirus.csv")
+
+
+
+
+#asianheritagemonth <- search_tweets("#AsianHeritageMonth", n=2274, include_rts=FALSE, lang="en")
+asianheritagemonth <- select(asianheritagemonth, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(asianheritagemonth, file = "data/twitter_data/twitter_asianheritagemonth.csv")
+
+#blacklivesmatter <- search_tweets("#BlackLivesMatter", n=18000, include_rts=FALSE, lang="en")
+blacklivesmatter <- select(blacklivesmatter, 
+              user_id, status_id, created_at, screen_name, text, source,
+              display_text_width, reply_to_status_id, reply_to_user_id,
+              reply_to_screen_name, is_quote, is_retweet, favorite_count,
+              retweet_count, quote_count, reply_count)
+write_csv(blacklivesmatter, file = "data/twitter_data/twitter_blacklivesmatter.csv")
+
+#blm <- search_tweets("#BLM", n=7397, include_rts=FALSE, lang="en")
+blm <- select(blm, 
+              user_id, status_id, created_at, screen_name, text, source,
+              display_text_width, reply_to_status_id, reply_to_user_id,
+              reply_to_screen_name, is_quote, is_retweet, favorite_count,
+              retweet_count, quote_count, reply_count)
+write_csv(blm, file = "data/twitter_data/twitter_blm.csv")
+
+#stopaapihate <- search_tweets("#StopAAPIHate", n=2538, include_rts=FALSE, lang="en")
+stopaapihate <- select(stopaapihate, 
+                      user_id, status_id, created_at, screen_name, text, source,
+                      display_text_width, reply_to_status_id, reply_to_user_id,
+                      reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                      retweet_count, quote_count, reply_count)
+write_csv(stopaapihate, file = "data/twitter_data/twitter_stopaapihate.csv")
+
+#supportblackbusiness <- search_tweets("#SupportBlackBusiness", n=729, include_rts=FALSE, lang="en")
+supportblackbusiness <- select(supportblackbusiness, 
+                              user_id, status_id, created_at, screen_name, text, source,
+                              display_text_width, reply_to_status_id, reply_to_user_id,
+                              reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                              retweet_count, quote_count, reply_count)
+write_csv(supportblackbusiness, file = "data/twitter_data/twitter_supportblackbusiness.csv")
+
+#socialdistancing <- search_tweets("#SocialDistancing", n=3372, include_rts=FALSE, lang="en")
+socialdistancing <- select(socialdistancing, 
+                          user_id, status_id, created_at, screen_name, text, source,
+                          display_text_width, reply_to_status_id, reply_to_user_id,
+                          reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                          retweet_count, quote_count, reply_count)
+write_csv(socialdistancing, file = "data/twitter_data/twitter_socialdistancing.csv")
+
+#wuhanvirus <- search_tweets("#WuhanVirus", n=2341, include_rts=FALSE, lang="en")
+wuhanvirus <- select(wuhanvirus, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(wuhanvirus, file = "data/twitter_data/twitter_wuhanvirus.csv")
+
+#sayhisname <- search_tweets("#SayHisName", n=223, include_rts=FALSE, lang="en")
+sayhisname <- select(sayhisname, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(sayhisname, file = "data/twitter_data/twitter_sayhisname.csv")
+
+#sayhername <- search_tweets("#SayHerName", n=474, include_rts=FALSE, lang="en")
+sayhername <- select(sayhername, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(sayhername, file = "data/twitter_data/twitter_sayhername.csv")
+
+#georgefloyd <- search_tweets("#GeorgeFloyd", n=2492, include_rts=FALSE, lang="en")
+georgefloyd <- select(georgefloyd, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(georgefloyd, file = "data/twitter_data/twitter_georgefloyd.csv")
+
+#breonnataylor <- search_tweets("#BreonnaTaylor", n=534, include_rts=FALSE, lang="en")
+breonnataylor <- select(breonnataylor, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(breonnataylor, file = "data/twitter_data/twitter_breonnataylor.csv")
+
+#aapivisibility <- search_tweets("#AAPIVisibility", n=101, include_rts=FALSE, lang="en")
+aapivisibility <- select(aapivisibility, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(aapivisibility, file = "data/twitter_data/twitter_aapivisibility.csv")
+
+#chinavirus <- search_tweets("#ChinaVirus", n=1616, include_rts=FALSE, lang="en")
+chinavirus <- select(chinavirus, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(chinavirus, file = "data/twitter_data/twitter_chinavirus.csv")
+
+#flattenthecurve <- search_tweets("#FlattenTheCurve", n=571, include_rts=FALSE, lang="en")
+flattenthecurve <- select(flattenthecurve, 
+                         user_id, status_id, created_at, screen_name, text, source,
+                         display_text_width, reply_to_status_id, reply_to_user_id,
+                         reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                         retweet_count, quote_count, reply_count)
+write_csv(flattenthecurve, file = "data/twitter_data/twitter_flattenthecurve.csv")
+
+#moderna <- search_tweets("moderna", n=18000, include_rts=FALSE, lang="en")
+moderna <- select(moderna, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(moderna, file = "data/twitter_data/twitter_moderna.csv")
+
+#pfizer <- search_tweets("pfizer", n=18000, include_rts=FALSE, lang="en")
+pfizer <- select(pfizer, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(pfizer, file = "data/twitter_data/twitter_pfizer.csv")
+
+#stayathome <- search_tweets("#StayAtHome", n=2172, include_rts=FALSE, lang="en")
+stayathome <- select(stayathome, 
+                     user_id, status_id, created_at, screen_name, text, source,
+                     display_text_width, reply_to_status_id, reply_to_user_id,
+                     reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                     retweet_count, quote_count, reply_count)
+write_csv(stayathome, file = "data/twitter_data/twitter_stayathome.csv")
+
+#pandemic <- search_tweets("pandemic", n=18000, include_rts=FALSE, lang="en")
+pandemic <- select(pandemic, 
+                  user_id, status_id, created_at, screen_name, text, source,
+                  display_text_width, reply_to_status_id, reply_to_user_id,
+                  reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                  retweet_count, quote_count, reply_count)
+write_csv(pandemic, file = "data/twitter_data/twitter_pandemic.csv")
+
+#racism <- search_tweets("racism", n=1000, include_rts=FALSE, lang="en")
+racism <- select(racism, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(racism, file = "data/twitter_data/twitter_racism.csv")
+
+#covid <- search_tweets("covid", n=4999, include_rts=FALSE, lang="en")
+covid <- select(covid, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(covid, file = "data/twitter_data/twitter_covid.csv")
+
+#stopasianhate <- search_tweets("#StopAsianHate", n=10603, include_rts=FALSE, lang="en")
+stopasianhate <- select(stopasianhate, 
+                        user_id, status_id, created_at, screen_name, text, source,
+                        display_text_width, reply_to_status_id, reply_to_user_id,
+                        reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                        retweet_count, quote_count, reply_count)
+write_csv(stopasianhate, file = "data/twitter_data/twitter_stopasianhate.csv")
+
+#solidarity <- search_tweets("solidarity", n=18000, include_rts=FALSE, lang="en")
+solidarity <- select(solidarity, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(solidarity, file = "data/twitter_data/twitter_solidarity.csv")
 ```
 
 
-```{r}
-# Remove retweets
-Gates_tweets_organic <- Gates_tweets[Gates_tweets$is_retweet==FALSE, ] 
+```{r read-in twitter data}
+covid19 <- read_csv("data/twitter_data/twitter_covid19.csv")
+coronavirus <- read_csv("data/twitter_data/twitter_coronavirus.csv")
 
-# Remove replies
-Gates_tweets_organic <- subset(Gates_tweets_organic
-                               , is.na(Gates_tweets_organic$reply_to_status_id)) 
-
-# Analyze engagement based on favorites and retweets
-Gates_tweets_organic <- Gates_tweets_organic %>% 
-  arrange(-favorite_count)
-Gates_tweets_organic[1,5]
-
-Gates_tweets_organic <- Gates_tweets_organic %>% 
-  arrange(-retweet_count)
-Gates_tweets_organic[1,5]
+blacklivesmatter <- read_csv("data/twitter_data/twitter_blacklivesmatter.csv")
+aapivisibility <- read_csv("data/twitter_data/twitter_aapivisibility.csv")
+blm <- read_csv("data/twitter_data/twitter_blm.csv")
+breonnataylor <- read_csv("data/twitter_data/twitter_breonnataylor.csv")
+chinavirus <- read_csv("data/twitter_data/twitter_chinavirus.csv")
+covid <- read_csv("data/twitter_data/twitter_covid.csv")
+flattenthecurve <- read_csv("data/twitter_data/twitter_flattenthecurve.csv")
+georgefloyd <- read_csv("data/twitter_data/twitter_georgefloyd.csv")
+moderna <- read_csv("data/twitter_data/twitter_moderna.csv")
+pandemic <- read_csv("data/twitter_data/twitter_pandemic.csv")
+pfizer <- read_csv("data/twitter_data/twitter_pfizer.csv")
+racism <- read_csv("data/twitter_data/twitter_racism.csv")
+sayhername <- read_csv("data/twitter_data/twitter_sayhername.csv")
+sayhisname <- read_csv("data/twitter_data/twitter_sayhisname.csv")
+socialdistancing <- read_csv("data/twitter_data/twitter_socialdistancing.csv")
+solidarity <- read_csv("data/twitter_data/twitter_solidarity.csv")
+stayathome <- read_csv("data/twitter_data/twitter_stayathome.csv")
+stopaapihate <- read_csv("data/twitter_data/twitter_stopaapihate.csv")
+stopasianhate <- read_csv("data/twitter_data/twitter_stopasianhate.csv")
+supportblackbusiness <- read_csv("data/twitter_data/twitter_supportblackbusiness.csv")
+wuhanvirus <- read_csv("data/twitter_data/twitter_wuhanvirus.csv")
 ```
 
-```{r}
-# Keeping only the retweets
-Gates_retweets <- Gates_tweets[Gates_tweets$is_retweet==TRUE,]
-
-# Keeping only the replies
-Gates_replies <- subset(Gates_tweets, !is.na(Gates_tweets$reply_to_status_id))
-
-# Creating a data frame
-data <- data.frame(
-  category=c("Organic", "Retweets", "Replies"),
-  count=c(2856, 192, 120)
-)
-
-# Adding columns 
-data$fraction = data$count / sum(data$count)
-data$percentage = data$count / sum(data$count) * 100
-data$ymax = cumsum(data$fraction)
-data$ymin = c(0, head(data$ymax, n=-1))
-
-# Rounding the data to two decimal points
-data <- round_df(data, 2)
-
-# Specify what the legend should say
-Type_of_Tweet <- paste(data$category, data$percentage, "%")
-
-# Show ratio of replies/retweets/organic tweets
-ggplot(data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Type_of_Tweet)) +
-  geom_rect() +
-  coord_polar(theta="y") + 
-  xlim(c(2, 4)) +
-  theme_void() +
-  theme(legend.position = "right")
-```
-
-```{r}
-# Show when the tweets are published
-colnames(Gates_tweets)[colnames(Gates_tweets)=="screen_name"] <- "Twitter_Account"
-
-ts_plot(dplyr::group_by(Gates_tweets, Twitter_Account), "year") +
-  ggplot2::theme_minimal() +
-  ggplot2::theme(plot.title = ggplot2::element_text(face = "bold")) +
-  ggplot2::labs(
-    x = NULL, y = NULL,
-    title = "Frequency of Tweets from Bill Gates",
-    subtitle = "Tweet counts aggregated by year",
-    caption = "\nSource: Data collected from Twitter's REST API via rtweet"
-  )
-```
-
-```{r}
-# Show from where the tweets are published
-Gates_app <- Gates_tweets %>% 
-  select(source) %>% 
-  group_by(source) %>%
-  summarize(count=n())
-Gates_app <- subset(Gates_app, count > 11)
-
-Gates_app <- Gates_tweets %>% 
-  select(source) %>% 
-  group_by(source) %>%
-  summarize(count=n())
-Gates_app <- subset(Gates_app, count > 11)
-
-data <- data.frame(
-  category=Gates_app$source,
-  count=Gates_app$count
-)
-data$fraction = data$count / sum(data$count)
-data$percentage = data$count / sum(data$count) * 100
-data$ymax = cumsum(data$fraction)
-data$ymin = c(0, head(data$ymax, n=-1))
-data <- round_df(data, 2)
-Source <- paste(data$category, data$percentage, "%")
-ggplot(data, aes(ymax=ymax, ymin=ymin, xmax=4, xmin=3, fill=Source)) +
-  geom_rect() +
-  coord_polar(theta="y") + # Try to remove that to understand how the chart is built initially
-  xlim(c(2, 4)) +
-  theme_void() +
-  theme(legend.position = "right")
+```{r combine twitter data}
+covid_all <- rbind.data.frame(covid, wuhanvirus, chinavirus, flattenthecurve, moderna,
+                              pfizer, socialdistancing, stayathome)
+                              #,coronavirus, covid19, vaccine
+black <- rbind.data.frame(blm, breonnataylor, georgefloyd, racism, solidarity, sayhername, 
+                          sayhisname, supportblackbusiness, blacklivesmatter)
+asian <- rbind.data.frame(stopasianhate, chinavirus, aapivisibility, stopaapihate, 
+                          racism, solidarity, asianheritagemonth)
 ```
 
 
-```{r}
-# Show the most frequent words found in the tweets
+```{r clean_tweets function}
+# Function that cleans up the tweets
+clean_tweets <- function(text) {
+  # Eliminate URLs
+  text <- gsub("https\\S*", "", text)
+  text <- gsub(" ?(f|ht)(tp)(s?)(://)(.*)[.|/](.*)", "", text)
 
-# reomve hyperlinks, @ mentions or punctuations
-Gates_tweets_organic$text <-  gsub("https\\S*", "", Gates_tweets_organic$text)
-Gates_tweets_organic$text <-  gsub("@\\S*", "", Gates_tweets_organic$text) 
-Gates_tweets_organic$text <-  gsub("amp", "", Gates_tweets_organic$text) 
-Gates_tweets_organic$text <-  gsub("[\r\n]", "", Gates_tweets_organic$text)
-Gates_tweets_organic$text <-  gsub("[[:punct:]]", "", Gates_tweets_organic$text)
+  # Remove references to other twitter users 
+  text <- gsub("@\\S*", "", text) 
+  text <- gsub("@\\w+", "", text)
+  
+  # Remove extraneous things that are not part of the tweet
+  text <- gsub("amp;", "", text)
+  text <- gsub("\\n", "", text)
+  text <- gsub("[\r\n]", "", text)
+
+  # Eliminate punctuation
+  text <- gsub("[[:punct:]]", "", text)
+  
+  # Remove extra characters
+  text <- gsub("[^[:alpha:][:space:]]*", "", text)
+  
+  # Eliminate unnecessary space first
+  text <- gsub('{2,}', "", text)
+  
+  # Convert to lower case
+  text <- sapply(text, tolower)
+}
+
+covid_all$text <- clean_tweets(covid_all$text)
+black$text <- clean_tweets(black$text)
+asian$text <- clean_tweets(asian$text)
+```
+
+```{r stop words}
+data(stop_words)
+
+# more words to exclude
+asian1 <- c("stopasianhate", "stopaapihate", "stopasianhatecrimes", "stopaapihate",
+            "chinavirus", "hatestopasianhatestopasianhatecrimes", "asian", 
+            "asianheritagemonth", "racism", "solidarity") %>% 
+  as.data.frame() %>% rename(word = ".")
+
+asian2 <- c("limengyanyanlimeng", "limeng", "bannondrlimengyan", "drlimengyan",
+           "yan", "wengui", "guo", "bannon") %>% 
+  as.data.frame() %>% rename(word = ".")
+
+black1 <- c("blacklivesmatter", "blm", "georgefloyd", "breonnataylor", "supportblackbusiness",
+            "george", "floyd", "breonna", "taylor", "racism", "solidarity") %>% 
+  as.data.frame() %>% rename(word = ".")
 
 # remove stop words
-tweets <- Gates_tweets_organic %>%
+asian_tweets <- asian %>%
   select(text) %>%
   unnest_tokens(word, text)
-tweets <- tweets %>%
-  anti_join(stop_words)
+asian_tweets <- asian_tweets %>%
+  anti_join(stop_words, by = "word") %>% 
+  anti_join(asian1, by = "word") %>% 
+  anti_join(asian2, by = "word")
 
+black_tweets <- black %>%
+  select(text) %>%
+  unnest_tokens(word, text)
+black_tweets <- black_tweets %>%
+  anti_join(stop_words, by = "word") %>% 
+  anti_join(black1, by = "word")
+```
+
+```{r bar charts}
 # gives you a bar chart of the most frequent words found in the tweets
-tweets %>% 
+asian_tweets %>% 
   count(word, sort = TRUE) %>%
-  top_n(15) %>%
+  top_n(30) %>%
   mutate(word = reorder(word, n)) %>%
   ggplot(aes(x = word, y = n)) +
   geom_col() +
@@ -172,57 +380,22 @@ tweets %>%
   coord_flip() +
   labs(y = "Count",
        x = "Unique words",
-       title = "Most frequent words found in the tweets of Bill Gates",
-       subtitle = "Stop words removed from the list")
+       title = "Most frequent words found in the tweets about \nthe Asian American experience")
 ```
 
-```{r}
-# Show the most frequently used hashtags
-Gates_tweets_organic$hashtags <- as.character(Gates_tweets_organic$hashtags)
-Gates_tweets_organic$hashtags <- gsub("c\\(", "", Gates_tweets_organic$hashtags)
-set.seed(1234)
-wordcloud(Gates_tweets_organic$hashtags, min.freq=5, scale=c(3.5, .5), random.order=FALSE, rot.per=0.35,
-          colors=brewer.pal(8, "Dark2"))
-```
 
-```{r}
-# Show the accounts from which most retweets originate 
+```{r wordclouds}
+# Show the most frequent words associated with the Asian American experience 
 set.seed(1234)
-wordcloud(Gates_retweets$retweet_screen_name, min.freq=3, scale=c(2, .5), random.order=FALSE, rot.per=0.25, 
-          colors=brewer.pal(8, "Dark2"))
+wordcloud(asian_tweets$word, min.freq=10, max.words = 100, scale=c(2, .5), random.order=FALSE,
+          rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+
+# Show the most frequent words associated with the Black experience 
+set.seed(1234)
+wordcloud(black_tweets$word, min.freq=5, max.words = 50, scale=c(2, .5), random.order=FALSE,
+          rot.per=0.25, colors=brewer.pal(15, "Dark2"))
 ```
 
 ### Sentiment Analysis
 
 - capture the tone of your tweets and understand how they balance out 
-
-```{r}
-library(syuzhet)
-# Converting tweets to ASCII to trackle strange characters
-tweets <- iconv(tweets, from="UTF-8", to="ASCII", sub="")
-# removing retweets, in case needed 
-tweets <-gsub("(RT|via)((?:\\b\\w*@\\w+)+)","",tweets)
-# removing mentions, in case needed
-tweets <-gsub("@\\w+","",tweets)
-ew_sentiment<-get_nrc_sentiment((tweets))
-sentimentscores<-data.frame(colSums(ew_sentiment[,]))
-names(sentimentscores) <- "Score"
-sentimentscores <- cbind("sentiment"=rownames(sentimentscores),sentimentscores)
-rownames(sentimentscores) <- NULL
-ggplot(data=sentimentscores,aes(x=sentiment,y=Score))+
-  geom_bar(aes(fill=sentiment),stat = "identity")+
-  theme(legend.position="none")+
-  xlab("Sentiments")+ylab("Scores")+
-  ggtitle("Total sentiment based on scores")+
-  theme_minimal()
-```
-
-source: https://www.tidytextmining.com/sentiment.html 
-
-```{r}
-library(dplyr)
-library(stringr)
-library(tidyr)
-library(ggplot2)
-```
-
