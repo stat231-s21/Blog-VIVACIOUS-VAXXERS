@@ -73,16 +73,24 @@ vaccine <- select(vaccine,
                 retweet_count, quote_count, reply_count)
 write_csv(vaccine, file = "data/twitter_data/twitter_vaccine.csv")
 
-coronavirus <- search_tweets("#coronavirus", n=18000, include_rts=FALSE, lang="en")
-coronavirus <- select(coronavirus, 
+johnson <- search_tweets("#johnson", n=18000, include_rts=FALSE, lang="en")
+johnson <- select(johnson, 
                 user_id, status_id, created_at, screen_name, text, source,
                 display_text_width, reply_to_status_id, reply_to_user_id,
                 reply_to_screen_name, is_quote, is_retweet, favorite_count,
                 retweet_count, quote_count, reply_count)
+write_csv(johnson, file = "data/twitter_data/twitter_johnson.csv")
+
+
+
+
+#coronavirus <- search_tweets("#coronavirus", n=18000, include_rts=FALSE, lang="en")
+coronavirus <- select(coronavirus, 
+                      user_id, status_id, created_at, screen_name, text, source,
+                      display_text_width, reply_to_status_id, reply_to_user_id,
+                      reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                      retweet_count, quote_count, reply_count)
 write_csv(coronavirus, file = "data/twitter_data/twitter_coronavirus.csv")
-
-
-
 
 #asianheritagemonth <- search_tweets("#AsianHeritageMonth", n=2274, include_rts=FALSE, lang="en")
 asianheritagemonth <- select(asianheritagemonth, 
@@ -264,8 +272,11 @@ write_csv(solidarity, file = "data/twitter_data/twitter_solidarity.csv")
 
 ```{r read-in twitter data}
 covid19 <- read_csv("data/twitter_data/twitter_covid19.csv")
-coronavirus <- read_csv("data/twitter_data/twitter_coronavirus.csv")
+vaccine <- read_csv("data/twitter_data/twitter_vaccine.csv")
+johnson <- read_csv("data/twitter_data/twitter_johnson.csv")
 
+
+coronavirus <- read_csv("data/twitter_data/twitter_coronavirus.csv")
 blacklivesmatter <- read_csv("data/twitter_data/twitter_blacklivesmatter.csv")
 aapivisibility <- read_csv("data/twitter_data/twitter_aapivisibility.csv")
 blm <- read_csv("data/twitter_data/twitter_blm.csv")
@@ -290,12 +301,12 @@ wuhanvirus <- read_csv("data/twitter_data/twitter_wuhanvirus.csv")
 ```
 
 ```{r combine twitter data}
-covid_all <- rbind.data.frame(covid, wuhanvirus, chinavirus, flattenthecurve, moderna,
-                              pfizer, socialdistancing, stayathome)
-                              #,coronavirus, covid19, vaccine
-black <- rbind.data.frame(blm, breonnataylor, georgefloyd, racism, solidarity, sayhername, 
+covid_exp <- rbind.data.frame(covid, wuhanvirus, chinavirus, flattenthecurve, moderna,
+                              pfizer, socialdistancing, stayathome, coronavirus)
+                              # covid19, vaccine, johnson
+black_exp <- rbind.data.frame(blm, breonnataylor, georgefloyd, racism, solidarity, sayhername, 
                           sayhisname, supportblackbusiness, blacklivesmatter)
-asian <- rbind.data.frame(stopasianhate, chinavirus, aapivisibility, stopaapihate, 
+asian_exp <- rbind.data.frame(stopasianhate, chinavirus, aapivisibility, stopaapihate, 
                           racism, solidarity, asianheritagemonth)
 ```
 
@@ -305,6 +316,7 @@ asian <- rbind.data.frame(stopasianhate, chinavirus, aapivisibility, stopaapihat
 clean_tweets <- function(text) {
   # Eliminate URLs
   text <- gsub("https\\S*", "", text)
+  text <- gsub("tco", "", text)
   text <- gsub(" ?(f|ht)(tp)(s?)(://)(.*)[.|/](.*)", "", text)
 
   # Remove references to other twitter users 
@@ -329,15 +341,19 @@ clean_tweets <- function(text) {
   text <- sapply(text, tolower)
 }
 
-covid_all$text <- clean_tweets(covid_all$text)
-black$text <- clean_tweets(black$text)
-asian$text <- clean_tweets(asian$text)
+covid_exp$text <- clean_tweets(covid_exp$text)
+black_exp$text <- clean_tweets(black_exp$text)
+asian_exp$text <- clean_tweets(asian_exp$text)
 ```
 
 ```{r stop words}
 data(stop_words)
 
 # more words to exclude
+covid_exp1 <- c("covid", "wuhanvirus", "chinavirus", "flattenthecurve", "moderna",
+                "pfizer", "socialdistancing", "stayathome", "vaccine") %>% 
+  as.data.frame() %>% rename(word = ".")
+
 asian1 <- c("stopasianhate", "stopaapihate", "stopasianhatecrimes", "stopaapihate",
             "chinavirus", "hatestopasianhatestopasianhatecrimes", "asian", 
             "asianheritagemonth", "racism", "solidarity") %>% 
@@ -352,20 +368,33 @@ black1 <- c("blacklivesmatter", "blm", "georgefloyd", "breonnataylor", "supportb
   as.data.frame() %>% rename(word = ".")
 
 # remove stop words
-asian_tweets <- asian %>%
+covid_exp_tweets <- covid_exp %>%
   select(text) %>%
   unnest_tokens(word, text)
-asian_tweets <- asian_tweets %>%
+covid_exp_tweets <- covid_exp_tweets %>%
+  anti_join(stop_words, by = "word") %>% 
+  anti_join(covid_exp1, by = "word")
+
+asian_exp_tweets <- asian_exp %>%
+  select(text) %>%
+  unnest_tokens(word, text)
+asian_exp_tweets <- asian_exp_tweets %>%
   anti_join(stop_words, by = "word") %>% 
   anti_join(asian1, by = "word") %>% 
   anti_join(asian2, by = "word")
 
-black_tweets <- black %>%
+black_exp_tweets <- black_exp %>%
   select(text) %>%
   unnest_tokens(word, text)
-black_tweets <- black_tweets %>%
+black_exp_tweets <- black_exp_tweets %>%
   anti_join(stop_words, by = "word") %>% 
   anti_join(black1, by = "word")
+```
+
+```{r}
+write_csv(covid_exp_tweets, file = "data/twitter_data/tweets_covid_exp.csv")
+write_csv(asian_exp_tweets, file = "data/twitter_data/tweets_asian_exp.csv")
+write_csv(black_exp_tweets, file = "data/twitter_data/tweets_black_exp.csv")
 ```
 
 ```{r bar charts}
@@ -385,16 +414,21 @@ asian_tweets %>%
 
 
 ```{r wordclouds}
-# Show the most frequent words associated with the Asian American experience 
 set.seed(1234)
-wordcloud(asian_tweets$word, min.freq=10, max.words = 100, scale=c(2, .5), random.order=FALSE,
-          rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+
+# Show the most frequent words associated with the pandemic 
+wordcloud(covid_exp_tweets$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+          random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+
+# Show the most frequent words associated with the Asian American experience 
+wordcloud(asian_exp_tweets$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+          random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
 
 # Show the most frequent words associated with the Black experience 
-set.seed(1234)
-wordcloud(black_tweets$word, min.freq=5, max.words = 50, scale=c(2, .5), random.order=FALSE,
-          rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+wordcloud(black_exp_tweets$word, min.freq=5, max.words = 50, scale=c(2, .5), 
+          random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
 ```
+
 
 ### Sentiment Analysis
 

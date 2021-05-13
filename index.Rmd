@@ -96,6 +96,59 @@ Check out some of our spatial visualizations [here](https://lewis-ayodele.shinya
 
 # Twitter Analytics
 
+## Rise of Social Media during the Pandemic
+
+A pandemic, the death of George Floyd, the rise of hate crimes, and a presidential election called Americans to action. These events aggregated into a surging movement of activism that called for social change. The pandemic added a level of complexity (i.e., lockdowns and movement restrictions) that ultimately resulted in many of these calls to action to take place online. 
+
+The past 15 months proved that social media can be an agent of change beyond advertisements and awareness. We all witnessed the riveting rise of digital activism nationwide during a pandemic. The pandemic put people in a space where there was no other distraction and conveniently social media was accessible at the tip of our fingers, leaving room to amplify a lot of things that were usually silenced. Activism and protest thrived in digital spaces like Tiktok and Twitter. Simply, users felt that they have a safe space to interact, feel connected, be comforted, distract themselves, stay engaged, and find inspiration - without any risk of contagion.
+
+To better understand what it means to be Black or Asian in America during a pandemic, we decided to turn to Twitter.
+
+## Why Twitter
+
+Twitter defines its platform as "what's happening and what people are talking about right now," and they do so by "serving the public conversation." Twitter is among the top 3 social networking apps in the US with 353.1 million monthly and 192 million daily active users currently (February 2021). Twitter generates vast amounts of user-generated language data, making it the perfect platform to conduct textual/sentiment analysis. Twitter has considerable advantages over other social media platforms (e.g., Instagram, Facebook, TikTok) for analysis: 
+
+1) Every tweet is limited to a maximum of 280 characters, which provides us with a relatively homogeneous corpora.
+
+2) The entry costs are low - it's free to make an account! There are millions of active users that post tweets and retweet/favorite/comment on organic tweets, which generates an accessible and large data sample. 
+
+3) The tweets are publicly available, accessible, and retrievable via APIs. 
+
+### Twitter API
+
+Twitter API (application programming interfaces) enables programmatic access to Twitter. It can be used to analyze, gain insight from, and interact with Tweets/replies, accounts/users, direct messages, ads, and other endpoints. 
+
+To access it, users must register an application and permissions are not granted by default as there is an application follow-up that requires additional permissions. The standard Twitter API is free of charge and offers a seven-day endpoint to the tweet searches made. In order to trace back farther than seven-day old tweets, a paid subscription for the Premium or Enterprise subscription package is necessary.
+
+## Word Clouds 
+
+```{r read-in twitter data, echo=FALSE, warning=FALSE, message=FALSE}
+covid_exp <- read_csv("data/twitter_data/tweets_covid_exp.csv")
+black_exp <- read_csv("data/twitter_data/tweets_black_exp.csv")
+asian_exp <- read_csv("data/twitter_data/tweets_asian_exp.csv")
+```
+
+```{r wordclouds, echo=FALSE, warning=FALSE, message=FALSE}
+set.seed(1234)
+# Show the most frequent words associated with the pandemic 
+wordcloud(covid_exp$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+          random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+set.seed(1234)
+# Show the most frequent words associated with the Asian American experience 
+wordcloud(asian_exp$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+          random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+```
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+set.seed(1234)
+# Show the most frequent words associated with the Black experience 
+wordcloud(black_exp$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+          random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+```
+
 # Mental Health
 
 [Click here](https://lewis-ayodele.shinyapps.io/MentalHealthBK/) to see our interactive visualizations!
