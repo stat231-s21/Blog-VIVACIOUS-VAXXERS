@@ -41,14 +41,22 @@ By analyzing both demographic, health, and social data (such as social media met
 
 # Why focus on COVID-19
 
-
+Our group wanted to focus on Black and Asian communities during the pandemic because these are the communities that hit closest to home for our research group. When the pandemic first started with the president of the United States calling the virus, [the Chinese virus](https://www.ucsf.edu/news/2021/03/420081/trumps-chinese-virus-tweet-linked-rise-anti-asian-hashtags-twitter), the killings of [George Floyd](https://en.wikipedia.org/wiki/George_Floyd) and [Breonna Taylor](https://en.wikipedia.org/wiki/Killing_of_Breonna_Taylor) occurring in the summer of 2020, and the disproportionate deaths of people of color from [COVID-19](https://www.cdc.gov/coronavirus/2019-ncov/covid-data/investigations-discovery/hospitalization-death-by-race-ethnicity.html), we have personally perceived changes in our lived experiences as Black and Asian Americans. From our perspective, racism and bias has only seemed to increase during this pandemic despite growing awareness of the plights our communities face. We wanted to take a data based approach to see if our lived experiences and intuitions were reflected in publicly available national data. 
 
 # Communities of Interest
 
+While our communities of interest, Black and Asian America, are in no ways monolithic, there are data that we can focus on of these communities pre-COVID to get a better understanding of how the average experience has changed over the COVID-19 pandemic. 
+
 ## Black America
+
+Police brutality against the Black community has come to the forefront of national conciousness over the past year with highly publicized murders by police such as the murder of George Floyd and Breonna Taylor. However, violence at the hands of the state is nothing new for this population. Black men and women are significantly more likely to be killed by police than their white counterparts [(Edwards et al 2019)](https://www.pnas.org/content/116/34/16793). Additionally, Black people disproportionately face hate crime and bias related incidents (see pie chart below). 
+But the story Black America is not just one of plight. There is growing diversity within the Black population and an overall population increase. [Pew reports](https://www.pewresearch.org/social-trends/2021/03/25/the-growing-diversity-of-black-america/) that 1 in 4 Black people are members of generation Z, and there is a steady increase of Black people receiving college degrees.
 
 
 ## Asian America
+
+The COVID-19 pandemic continues to spotlight the increase in anti-Asian bias and hate across the country. But, anti-Asian bias has been a crisis in this country for centuries. Laws such as the [Chinese Exclusion Act](https://history.state.gov/milestones/1866-1898/chinese-immigration) and [Japanese internment](https://www.archives.gov/education/lessons/japanese-relocation) codified anti-Asian sentiment. In April 2021, Pew Research reported that [1 in 3 Asian Americans fear race based physical violence](https://www.pewresearch.org/fact-tank/2021/04/21/one-third-of-asian-americans-fear-threats-physical-attacks-and-most-say-violence-against-them-is-rising/). 
+But like Black-America, the narrative is not only negative. Asian-Americans are the fastest growing racial group in America, and they are more likely to have a college degree than the average American. Overall, Asian-Americans have lower poverty rates than the national average, but withingroup differences are large, and smaller impoverished Asian ethnic groups are often overlooked  [(Pew 2021)](https://www.pewresearch.org/fact-tank/2021/04/09/asian-americans-are-the-fastest-growing-racial-or-ethnic-group-in-the-u-s/). It is important to note that it is hard to come by strong demographic data for asian populations in the US because many national surveys, such as the surveys conducted by Pew Research center, are not conducted in Asian languages, therefore there is a strong non-response bias in our data. 
 
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 #hate crimes bar chart
