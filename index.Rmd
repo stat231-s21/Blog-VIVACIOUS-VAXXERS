@@ -15,6 +15,10 @@ library(tidyverse)
 library(DT)
 library(mosaic)
 library(foreign)
+library(wordcloud)
+library(textdata)
+library(readr)
+library(rtweet)
 #loading datasets
 #police shootings
 acab <- read_csv("data/fatal-police-shootings-data.csv") %>%
