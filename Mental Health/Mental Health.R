@@ -100,8 +100,9 @@ server <- function(input, output){
 	})
 	
 	output$bar <- renderPlot({
-		ggplot(data = AD_reactive_b(), aes(x = Subgroup)) +
-			geom_bar(color = Subgroup, stat = "identity") + labs(x = "Subgroup", y = "Value of Depression/Anxiety")
+		ggplot(data = AD_reactive_b(), aes(x = Subgroup, y = Value)) +
+			geom_bar(stat = "identity") + labs(x = "Subgroup", y = "Value of Depression/Anxiety") + 
+			theme(axis.text.x = element_text(angle = 90))
 	})
 }
 
