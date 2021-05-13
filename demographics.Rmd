@@ -1,0 +1,36 @@
+---
+title: "Demographics"
+author: "Ayodele G. Lewis"
+date: "5/12/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+#wrangling
+library(tidyverse)
+library(DT)
+library(mosaic)
+library(foreign)
+#read in data
+acab <- read_csv("data/fatal-police-shootings-data.csv")
+```
+```{r}
+hateCrimes <-  read_csv("data/table-1.csv") %>%
+	janitor::clean_names()
+hateCrimesWide <- hateCrimes %>%
+	group_by(bias_motivation) %>%
+	summarise(total = incidents) %>%
+	spread(key=bias_motivation, value=total, fill=0)
+g <- hateCrimesWide %>%
+	ggplot(aes(x= c("Anti-Asian", "Anti-Black or African American","" )))
+g + geom_bar()
+	
+acab1 <- acab %>%
+	levels(race)
+acab1
+g1 <- acab %>%
+	ggplot(aes(x=race, fill=race))
+g1 + geom_bar()
+	+ labs()
+```
+
