@@ -31,6 +31,10 @@ hateCrimes <-  read_csv("data/table-1.csv") %>%
 pop <- read_csv("data/pop_stats.csv") %>%
 	janitor::clean_names() %>%
 	na.omit()
+#wordcloud datasets
+covid_exp <- read_csv("data/twitter_data/tweets_covid_exp.csv")
+black_exp <- read_csv("data/twitter_data/tweets_black_exp.csv")
+asian_exp <- read_csv("data/twitter_data/tweets_asian_exp.csv")
 ```
 
 # Motivations
@@ -129,11 +133,6 @@ To access it, users must register an application and permissions are not granted
 
 ## Word Clouds 
 
-```{r read-in twitter data, echo=FALSE, warning=FALSE, message=FALSE}
-covid_exp <- read_csv("data/twitter_data/tweets_covid_exp.csv")
-black_exp <- read_csv("data/twitter_data/tweets_black_exp.csv")
-asian_exp <- read_csv("data/twitter_data/tweets_asian_exp.csv")
-```
 ### Tweets related to generally about COVID 
 ```{r wordclouds, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(1234)
