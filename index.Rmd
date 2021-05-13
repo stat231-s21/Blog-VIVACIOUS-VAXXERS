@@ -131,7 +131,7 @@ covid_exp <- read_csv("data/twitter_data/tweets_covid_exp.csv")
 black_exp <- read_csv("data/twitter_data/tweets_black_exp.csv")
 asian_exp <- read_csv("data/twitter_data/tweets_asian_exp.csv")
 ```
-
+### Tweets related to generally about COVID 
 ```{r wordclouds, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(1234)
 # Show the most frequent words associated with the pandemic 
@@ -139,12 +139,16 @@ wordcloud(covid_exp$word, min.freq=10, max.words = 100, scale=c(2, .5),
           random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
 ```
 
+### Tweets related to Asian American trends
+
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(1234)
 # Show the most frequent words associated with the Asian American experience 
 wordcloud(asian_exp$word, min.freq=10, max.words = 100, scale=c(2, .5), 
           random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
 ```
+
+### Tweets related to Black American trends 
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(1234)
@@ -159,34 +163,35 @@ We also studied the emotional impact that COVID-19 MAY have inflicted upon indiv
 To best apply our analysis to this general issue, we created a Shiny application that enabled us to view diverse relationships between racial groups and the percentage of individuals who have succumbed to depression and/or anxiety.  To visualize these relationships, we created an interactive time series line graph and an interactive bar chart.
 
 To provide some clarification on a certain variable, “Time Period” represents the time period in which data was collected.  We made sure to collect data from time periods that corresponded to the timeline of the COVID-19 pandemic in the United States.  To define all 28 time periods:
-Time Period 1 = April 23, 2020 - May 5, 2020
-Time Period 2 = May 7 - May 12
-Time Period 3 = May 14 - May 19
-Time Period 4 = May 21 - May 26
-Time Period 5 = May 28 - June 2
-Time Period 6 = June 4 - June 9
-Time Period 7 = June 11 - June 16
-Time Period 8 = June 18 - June 23
-Time Period 9 = June 25 - June 30
-Time Period 10 = July 2 - July 7
-Time Period 11 = July 9 - July 14
-Time Period 12 = July 16 - July 21
-Time Period 13 = August 19 - August 31
-Time Period 14 = September 2 - September 14
-Time Period 15 = September 16 - September 28
-Time Period 16 = September 30 - October 12
-Time Period 17 = October 14 - October 26
-Time Period 18 = October 28 - November 9
-Time Period 19 = November 11 - November 23
-Time Period 20 = November 25 - December 7
-Time Period 21 = December 9 - December 21
-Time Period 22 = January 6, 2021 - January 18, 2021
-Time Period 23 = January 20 - February 1
-Time Period 24 = February 3 - February 15
-Time Period 25 = February 17 - March 1
-Time Period 26 = March 3 - March 15
-Time Period 27 = March 17 - March 29
-Time Period 28 = April 14 - April 26
+
+- Time Period 1 = April 23, 2020 - May 5, 2020
+- Time Period 2 = May 7 - May 12
+- Time Period 3 = May 14 - May 19
+- Time Period 4 = May 21 - May 26
+- Time Period 5 = May 28 - June 2
+- Time Period 6 = June 4 - June 9
+- Time Period 7 = June 11 - June 16
+- Time Period 8 = June 18 - June 23
+- Time Period 9 = June 25 - June 30
+- Time Period 10 = July 2 - July 7
+- Time Period 11 = July 9 - July 14
+- Time Period 12 = July 16 - July 21
+- Time Period 13 = August 19 - August 31
+- Time Period 14 = September 2 - September 14
+- Time Period 15 = September 16 - September 28
+- Time Period 16 = September 30 - October 12
+- Time Period 17 = October 14 - October 26
+- Time Period 18 = October 28 - November 9
+- Time Period 19 = November 11 - November 23
+- Time Period 20 = November 25 - December 7
+- Time Period 21 = December 9 - December 21
+- Time Period 22 = January 6, 2021 - January 18, 2021
+- Time Period 23 = January 20 - February 1
+- Time Period 24 = February 3 - February 15
+- Time Period 25 = February 17 - March 1
+- Time Period 26 = March 3 - March 15
+- Time Period 27 = March 17 - March 29
+- Time Period 28 = April 14 - April 26
 
 As we noticed, the CDC left some gaps, most likely due to lack of data to contribute.
 
