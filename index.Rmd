@@ -10,7 +10,23 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, fig.align="center")
+#loading libraries
 library(tidyverse)
+library(DT)
+library(mosaic)
+library(foreign)
+#loading datasets
+#police shootings
+acab <- read_csv("data/fatal-police-shootings-data.csv") %>%
+  filter(date > "2019-12-31")
+#hate crimes
+hateCrimes <-  read_csv("data/table-1.csv") %>%
+	janitor::clean_names() %>%
+	select(bias_motivation, incidents)
+#us population stats
+pop <- read_csv("data/pop_stats.csv") %>%
+	janitor::clean_names() %>%
+	na.omit()
 ```
 
 # Motivations
@@ -19,9 +35,9 @@ For our final project, we will not be building upon our mid-semester project, bu
 
 # Research Questions
 By analyzing both demographic, health, and social data (such as social media metrics), our group aims to explore how the past pandemic year has impacted both the mental and physical health of our chosen population. Our guiding questions are:
-- How has the pandemic impacted access to  healthcare/social services?
-- How has the pandemic impacted mental health?
-- Have popular social movements such as [#StopAsianHate](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) or [#BlackLivesMatter](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) had an impact on health outcomes?
+1. How has the pandemic impacted access to  healthcare/social services?
+2. How has the pandemic impacted mental health?
+3. Have popular social movements such as [#StopAsianHate](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) or [#BlackLivesMatter](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) had an impact on health outcomes?
 
 # Why focus on COVID-19
 
@@ -29,16 +45,52 @@ By analyzing both demographic, health, and social data (such as social media met
 
 # Communities of Interest
 
-Check out some of our spatial visualizations [here](https://lewis-ayodele.shinyapps.io/BlogAL/)
 ## Black America
 
+
 ## Asian America
+
+```{r echo=FALSE, warning=FALSE, message=FALSE}
+#hate crimes bar chart
+g <- hateCrimes %>%
+	ggplot(aes(x="", y=incidents, fill=bias_motivation))
+g + geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+	theme_void() +
+	labs(x= "Bias Motivation",
+			 y= "Number of Incidents",
+			 title = "Number of bias related incidents",
+			 subtitle = "in 2019",
+			 fill= NULL)
+#police shootings pie chart
+#g2 <- acab %>%
+	#ggplot(aes(x="", y=race, fill=race)) 
+  
+#g2 + geom_bar(stat="identity", width=1) +
+  #coord_polar("y", start=0) +
+#	theme_void() +
+  #labs(title="Number of Police Killings by race",
+       #subtitle = "2020 to 2021",
+			# caption = "A=Asian, B=Black, H=Hispanic,\n N=Native, O=Other, W=White",
+			  #fill= "Race")
+#population pie chart
+g3 <- pop %>%
+	ggplot(aes(x="", y=united_states, fill=fact))
+g3 + geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+	theme_void() +
+	labs(title= "Percentage of US racial groups",
+			 subtitle = "from 2020 census",
+			 fill="Racial group")
+```
+
+Check out some of our spatial visualizations [here](https://lewis-ayodele.shinyapps.io/BlogAL/)
 
 # Twitter Analytics
 
 # Mental Health
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For example, you can include **Bold** and _Italic_ and `Code` text.  For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
 
 You should test out updating your GitHub Pages website:
 
@@ -48,67 +100,4 @@ You should test out updating your GitHub Pages website:
 - commit and push BOTH the `index.Rmd` and the `index.html` files
 - go to https://stat231-s21.github.io/Blog-VIVACIOUS-VAXXERS/ to see the published test document (this is publicly available!)
 
-## Including code and plots
-
-You can embed code as normal, for example:
-
-```{r cars}
-summary(cars)
-```
-
-Let's clean up the format of that output:
-
-```{r pretty, echo=FALSE, warning=FALSE, message=FALSE}
-library(kableExtra)
-summary(cars) %>%
-  kable(col.names = c("Speed", "Distance")
-        , row.names = F) %>%
-  kable_styling(bootstrap_options = "striped"
-                , full_width = F) %>%
-  row_spec(0, bold = T, underline = T) %>%
-  column_spec(1:2, width = "1.5in") 
-```
-
-In a study from the 1920s, fifty cars were used to see how the speed of the car and the distance taken to stop were related.  Speeds ranged between `r min(cars$speed)` and `r max(cars$speed)` mph.  Distances taken to stop ranged between `r min(cars$dist)` and `r max(cars$dist)` feet, with the middle 50% falling between `r as.numeric(quantile(cars$dist)[2])` and `r as.numeric(quantile(cars$dist)[4])` feet.  
-
-You can also embed plots as normal, for example:
-
-```{r figure1, echo=FALSE}
-ggplot(data = cars, aes(x = speed, y = dist)) + 
-  geom_point() + 
-  labs(x = "Speed of car (mph)"
-       , y = "Distance taken to stop (ft)"
-       , title = "cars data (1920s)")
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
-
-
-## Including links and images
-
-You can include [Links](https://www.datadreaming.org/post/r-markdown-theme-gallery/) and images ![team logo](https://raw.githubusercontent.com/stat231-s21/Blog-VIVACIOUS-VAXXERS/main/images/s2g3-pulichealth1.jpg)
-
-You can embed a gif.
-
-![pugs](https://media.giphy.com/media/XHVmD4RyXgSjd8aUMb/giphy.gif)
-
-
-# You can even create tabs if you want! {.tabset .tabset-fade .tabset-pills}
-
-## Bulleted list
-
-You can make a bulleted list like this:
-
-- item 1
-- item 2
-- item 3
-
-
-## Numbered list
-
-You can make a numbered list like this
-
-1. First thing I want to say
-2. Second thing I want to say
-3. Third thing I want to say
 

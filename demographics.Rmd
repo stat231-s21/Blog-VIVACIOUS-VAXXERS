@@ -13,24 +13,47 @@ library(mosaic)
 library(foreign)
 #read in data
 acab <- read_csv("data/fatal-police-shootings-data.csv")
+hateCrimes <-  read_csv("data/table-1.csv") %>%
+	janitor::clean_names() %>%
+	select(bias_motivation, incidents)
+pop <- read_csv("data/pop_stats.csv") %>%
+	janitor::clean_names() %>%
+	na.omit()
 ```
 ```{r}
-hateCrimes <-  read_csv("data/table-1.csv") %>%
-	janitor::clean_names()
-hateCrimesWide <- hateCrimes %>%
-	group_by(bias_motivation) %>%
-	summarise(total = incidents) %>%
-	spread(key=bias_motivation, value=total, fill=0)
-g <- hateCrimesWide %>%
-	ggplot(aes(x= c("Anti-Asian", "Anti-Black or African American","" )))
-g + geom_bar()
+g <- hateCrimes %>%
+	ggplot(aes(bias_motivation, incidents, fill=bias_motivation))
+g + geom_col() +
+	theme(axis.text.x = element_blank()) +
+	labs(x= "Bias Motivation",
+			 y= "Number of Incidents",
+			 title = "Number of bias related incidents",
+			 subtitle = "in 2019",
+			 fill= NULL)
 	
-acab1 <- acab %>%
-	levels(race)
-acab1
+
 g1 <- acab %>%
 	ggplot(aes(x=race, fill=race))
-g1 + geom_bar()
-	+ labs()
+g1 + geom_bar() +
+	theme(axis.text.x = element_blank()) +
+	labs(title="Number of Police Killings by race",
+				 caption = "A=Asian, B=Black, H=Hispanic,\n N=Native, O=Other, W=White",
+				 fill= "Race")
+g2 <- acab %>%
+	ggplot(aes(x="", y=race, fill=race)) 
+  
+g2 + geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+	theme_void() 
+
+g3 <- pop %>%
+	ggplot(aes(x="", y=united_states, fill=fact))
+g3 + geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) +
+	theme_void() +
+	labs(title= "Percentage of US racial groups",
+			 subtitle = "from 2020 census",
+			 fill="Racial group")
+
 ```
 
