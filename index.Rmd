@@ -1,5 +1,5 @@
 ---
-title: "Racism in COVID-19"
+title: "Racism against Black and Asian American populations in COVID-19"
 author: "Vivacious Vaxxers"
 date: "May 2021"
 output:
