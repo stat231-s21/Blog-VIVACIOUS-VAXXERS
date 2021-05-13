@@ -1,0 +1,13 @@
+name: MentalHealthBK
+title: MentalHealthBK
+username:
+account: lewis-ayodele
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 4126222
+bundleId: 4594435
+url: https://lewis-ayodele.shinyapps.io/MentalHealthBK/
+when: 1620917374.01735
+asMultiple: FALSE
+asStatic: FALSE
+ignoredFiles: Data Wrangling.R|Mental Health.Rmd

@@ -98,14 +98,8 @@ Check out some of our spatial visualizations [here](https://lewis-ayodele.shinya
 
 # Mental Health
 
+[Click here](https://lewis-ayodele.shinyapps.io/MentalHealthBK/) to see our interactive visualizations!
 
 
-You should test out updating your GitHub Pages website:
-
-- clone your group's blog project repo in RStudio
-- update "Your Project Title Here" to a new title in the YAML header
-- knit `index.Rmd` 
-- commit and push BOTH the `index.Rmd` and the `index.html` files
-- go to https://stat231-s21.github.io/Blog-VIVACIOUS-VAXXERS/ to see the published test document (this is publicly available!)
 
 
