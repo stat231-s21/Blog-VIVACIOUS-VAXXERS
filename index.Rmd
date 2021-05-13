@@ -13,11 +13,29 @@ knitr::opts_chunk$set(echo = TRUE, fig.align="center")
 library(tidyverse)
 ```
 
-# Header 1
+# Motivations
+  
+For our final project, we will not be building upon our mid-semester project, but instead looking at the social impacts of the pandemic specifically on Asian- and Black-American populations. Through our mid semester project we realized that the current available data surrounding vaccinations isn't all that great; however, we still wanted to focus on COVID and the sociopolitical effects of the pandemic which have a multitude of public health implications. Additionally, this past year has brought the prevalence of anti-Black and anti-Asian hate crimes and violence to the forefront of many American minds. This issue is not just a social one but greatly impacts health, and as of early April, [the CDC has declared racism](https://www.cdc.gov/media/releases/2021/s0408-racism-health.html) as a threat to public health.
 
-## Header 2
+# Research Questions
+By analyzing both demographic, health, and social data (such as social media metrics), our group aims to explore how the past pandemic year has impacted both the mental and physical health of our chosen population. Our guiding questions are:
+- How has the pandemic impacted access to  healthcare/social services?
+- How has the pandemic impacted mental health?
+- Have popular social movements such as [#StopAsianHate](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) or [#BlackLivesMatter](https://twitter.com/search?q=%23StopAsianHate&src=typeahead_click) had an impact on health outcomes?
 
-### Header 3
+# Why focus on COVID-19
+
+
+
+# Communities of Interest
+
+## Black America
+
+## Asian America
+
+# Twitter Analytics
+
+# Mental Health
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For example, you can include **Bold** and _Italic_ and `Code` text.  For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
