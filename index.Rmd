@@ -154,6 +154,55 @@ wordcloud(black_exp$word, min.freq=10, max.words = 100, scale=c(2, .5),
 ```
 
 # Mental Health
+We also studied the emotional impact that COVID-19 MAY have inflicted upon individuals in the United States, based racial group.  We say MAY, mostly because despite the fact that we obtained our data during the “peak” months of the COVID-19 pandemic, there are many other variables/factors that we did not consider that also could have contributed to the emotional toil upon these individuals: economic issues, familial problems, and personal distraught.  
+
+To best apply our analysis to this general issue, we created a Shiny application that enabled us to view diverse relationships between racial groups and the percentage of individuals who have succumbed to depression and/or anxiety.  To visualize these relationships, we created an interactive time series line graph and an interactive bar chart.
+
+To provide some clarification on a certain variable, “Time Period” represents the time period in which data was collected.  We made sure to collect data from time periods that corresponded to the timeline of the COVID-19 pandemic in the United States.  To define all 28 time periods:
+Time Period 1 = April 23, 2020 - May 5, 2020
+Time Period 2 = May 7 - May 12
+Time Period 3 = May 14 - May 19
+Time Period 4 = May 21 - May 26
+Time Period 5 = May 28 - June 2
+Time Period 6 = June 4 - June 9
+Time Period 7 = June 11 - June 16
+Time Period 8 = June 18 - June 23
+Time Period 9 = June 25 - June 30
+Time Period 10 = July 2 - July 7
+Time Period 11 = July 9 - July 14
+Time Period 12 = July 16 - July 21
+Time Period 13 = August 19 - August 31
+Time Period 14 = September 2 - September 14
+Time Period 15 = September 16 - September 28
+Time Period 16 = September 30 - October 12
+Time Period 17 = October 14 - October 26
+Time Period 18 = October 28 - November 9
+Time Period 19 = November 11 - November 23
+Time Period 20 = November 25 - December 7
+Time Period 21 = December 9 - December 21
+Time Period 22 = January 6, 2021 - January 18, 2021
+Time Period 23 = January 20 - February 1
+Time Period 24 = February 3 - February 15
+Time Period 25 = February 17 - March 1
+Time Period 26 = March 3 - March 15
+Time Period 27 = March 17 - March 29
+Time Period 28 = April 14 - April 26
+
+As we noticed, the CDC left some gaps, most likely due to lack of data to contribute.
+
+When looking at the time series line graph, we noticed peculiar patterns that we deemed were too difficult to tell if they were related to the COVID-19 pandemic.  Some general ideas we took away from this interactive graph, however, included:
+A higher percentage of Hispanic/Latino individuals seemed to be depressed/anxious as we approach present day
+The percentage of White individuals who reported that they were depressed/anxious seemed to rise and dip according to certain time periods
+These rises and dips could be an effect of practically anything
+A higher percentage of Black individuals seemed to be depressed/anxious as we approach present day until we reach Time Period 25
+After Time Period 25, we see a huge dip in percentage of Black individuals who reported to be depressed/anxious.
+Though we are not too sure on what caused this dip, some events that took place during this time included Trump’s second impeachment trial and COVID-19 entering an optimistic rollout stage.
+The percentage of Asians who seemed depressed/anxious seemed to be low in general, despite a spike during Time Period 12.  After some gathering of information, we also concluded that this was the time former President Trump used the words “kung flu” to describe the COVID-19 virus.  Coincidence?  We think not.
+
+When looking at the bar chart, there does not seem to be any correlation between Time Period and percentage of individuals who reported to be depressed or anxious.  We’ve concluded that though the pandemic has certainly affected people emotionally and (unfortunately) for the worse, there are many other factors that we did not take into consideration during our analysis.  There does not seem to be any other conclusive relationships that we have noticed between racial group and Time Period as well.  Different racial groups had different percentages of those depressed at different time periods, which proved to be normal and not surprising at all.
+
+Therefore, though the COVID-19 pandemic has certainly affected people emotionally due to its rapid rampage and huge impact physically upon everyone in the United States, we cannot attribute most cases of depression to the pandemic specifically.
+
 
 [Click here](https://lewis-ayodele.shinyapps.io/MentalHealthBK/) to see our interactive visualizations!
 
