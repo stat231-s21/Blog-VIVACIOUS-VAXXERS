@@ -29,6 +29,7 @@ By analyzing both demographic, health, and social data (such as social media met
 
 # Communities of Interest
 
+Check out some of our spatial visualizations [here](https://lewis-ayodele.shinyapps.io/BlogAL/)
 ## Black America
 
 ## Asian America
