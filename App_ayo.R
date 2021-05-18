@@ -9,10 +9,10 @@ library(viridis)
 ##########################################################################
 ############################## import data ###############################
 ##########################################################################
-mental <- read_csv("data/map_mental_health.csv")
-health <- read_csv("data/map_health.csv")
-provider <- read_csv("data/map_provider.csv")
-covid <- read_csv("data/map_covid.csv")
+mental <- read_csv("map_mental_health.csv")
+health <- read_csv("map_health.csv")
+provider <- read_csv("map_provider.csv")
+covid <- read_csv("map_covid.csv")
 ##########################################################################
 ######## define choice values and labels for widgets (user inputs) #######
 ##########################################################################
@@ -21,8 +21,7 @@ covid <- read_csv("data/map_covid.csv")
 race_choice_values <- c("all_adults", "black", "white", "asian")
 race_choice_names <- c("All Adults", "Black", "White", "Asian")
 names(race_choice_values) <- race_choice_names
-#for selectInput state
-state_choices <- unique(usa_mental_health$state)
+
 
 ##########################################################################
 ################################    ui    ################################
@@ -133,7 +132,7 @@ server <- function(input,output){
       theme_void() +
       coord_fixed(ratio = 1.3)+
       labs(x = race_choice_names[race_choice_values == input$racevar1],
-           fill = "Number of Fair or Poor Health Days",
+           fill = "Percentage of Fair or Poor Health Days",
            caption = "* States with 0 days reported may have missing data",
            title = "Adults Who Report Fair/Poor Mental Health Days",
            subtitle= "in the United States in 2019")
@@ -156,7 +155,7 @@ server <- function(input,output){
       labs(x = race_choice_names[race_choice_values == input$racevar2],
            fill = "Percentage of Adults",
            caption = "* States with 0 adults reported may have missing data",
-           title = "Adults Who Report Not Seeing a Doctor n\ in the Past 12 Months Because of Cost",
+           title = "Adults Who Report Not Seeing a Doctor in the Past 12 Months Because of Cost",
            subtitle= "In the United States in 2019")  
  
 }) 

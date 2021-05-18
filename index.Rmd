@@ -71,6 +71,13 @@ But the story Black America is not just one of plight. There is growing diversit
 The COVID-19 pandemic continues to spotlight the increase in anti-Asian bias and hate across the country. But, anti-Asian bias has been a crisis in this country for centuries. Laws such as the [Chinese Exclusion Act](https://history.state.gov/milestones/1866-1898/chinese-immigration) and [Japanese internment](https://www.archives.gov/education/lessons/japanese-relocation) codified anti-Asian sentiment. In April 2021, Pew Research reported that [1 in 3 Asian Americans fear race based physical violence](https://www.pewresearch.org/fact-tank/2021/04/21/one-third-of-asian-americans-fear-threats-physical-attacks-and-most-say-violence-against-them-is-rising/). 
 But like Black-America, the narrative is not only negative. Asian-Americans are the fastest growing racial group in America, and they are more likely to have a college degree than the average American. Overall, Asian-Americans have lower poverty rates than the national average, but withingroup differences are large, and smaller impoverished Asian ethnic groups are often overlooked  [(Pew 2021)](https://www.pewresearch.org/fact-tank/2021/04/09/asian-americans-are-the-fastest-growing-racial-or-ethnic-group-in-the-u-s/). It is important to note that it is hard to come by strong demographic data for asian populations in the US because many national surveys, such as the surveys conducted by Pew Research center, are not conducted in Asian languages, therefore there is a strong non-response bias in our data. 
 
+## What the data tells us
+
+Our visualizations show that the proportion of hate crimes faced by marginalized ethnic groups is frequently not proportionate to their percentage of the overall population. By looking at data pre-COVID/2020, we can see that disproportionate anti-asian and anti-Black violence is not new in this country. The shiny app spatial visualizations show us that pre-pandemic there were widespread racial health inequities in the US with disparities in our communities of interest when compared to the overall population: including higher rates of poor mental health, poor physical health, and COVID-19 deaths.
+These visualizations motivated our desire to explore further about which ways these data might have changed as national hate crime statistics are not yet publically available for 2020. 
+
+### Pie Charts
+
 ```{r echo=FALSE, warning=FALSE, message=FALSE}
 #hate crimes bar chart
 g <- hateCrimes %>%
@@ -104,6 +111,8 @@ g3 + geom_bar(stat="identity", width=1) +
 			 subtitle = "from 2020 census",
 			 fill="Racial group")
 ```
+
+### Shiny App 
 
 Check out some of our spatial visualizations [here](https://lewis-ayodele.shinyapps.io/BlogAL/)
 
