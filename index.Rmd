@@ -5,7 +5,7 @@ date: "May 2021"
 output:
   rmdformats::readthedown:
     thumbnails: false
-    highlight: NULL
+    highlight: NULL 
 ---
 
 ```{r setup, include=FALSE}
@@ -40,6 +40,8 @@ asian_exp <- read_csv("data/twitter_data/tweets_asian_exp.csv")
 # Motivations
   
 For our final project, we will not be building upon our mid-semester project, but instead looking at the social impacts of the pandemic specifically on Asian- and Black-American populations. Through our mid semester project we realized that the current available data surrounding vaccinations isn't all that great; however, we still wanted to focus on COVID and the sociopolitical effects of the pandemic which have a multitude of public health implications. Additionally, this past year has brought the prevalence of anti-Black and anti-Asian hate crimes and violence to the forefront of many American minds. This issue is not just a social one but greatly impacts health, and as of early April, [the CDC has declared racism](https://www.cdc.gov/media/releases/2021/s0408-racism-health.html) as a threat to public health.
+
+![COVID-19 virus](images/covid19.jpeg)
 
 # Research Questions
 By analyzing both demographic, health, and social data (such as social media metrics), our group aims to explore how the past pandemic year has impacted both the mental and physical health of our chosen population. Our guiding questions are:
@@ -109,6 +111,8 @@ Check out some of our spatial visualizations [here](https://lewis-ayodele.shinya
 
 ## Rise of Social Media during the Pandemic
 
+![Demonstrators participate in a Black Lives Matter protest following the death of George Floyd in Minneapolis police custody, in London, Britain, June 13, 2020. Credit: Simon Dawson/Reuters](images/george_floyd.jpeg)
+
 A pandemic, the death of George Floyd, the rise of hate crimes, and a presidential election called Americans to action. These events aggregated into a surging movement of activism that called for social change. The pandemic added a level of complexity (i.e., lockdowns and movement restrictions) that ultimately resulted in many of these calls to action to take place online. 
 
 The past 15 months proved that social media can be an agent of change beyond advertisements and awareness. We all witnessed the riveting rise of digital activism nationwide during a pandemic. The pandemic put people in a space where there was no other distraction and conveniently social media was accessible at the tip of our fingers, leaving room to amplify a lot of things that were usually silenced. Activism and protest thrived in digital spaces like Tiktok and Twitter. Simply, users felt that they have a safe space to interact, feel connected, be comforted, distract themselves, stay engaged, and find inspiration - without any risk of contagion.
@@ -126,6 +130,8 @@ Twitter defines its platform as "what's happening and what people are talking ab
 3) The tweets are publicly available, accessible, and retrievable via APIs. 
 
 ### Twitter API
+
+![Twitter for Developers](images/twitter_api_logo.jpeg)
 
 Twitter API (application programming interfaces) enables programmatic access to Twitter. It can be used to analyze, gain insight from, and interact with Tweets/replies, accounts/users, direct messages, ads, and other endpoints. 
 
@@ -214,11 +220,13 @@ A few interesting observations:
 
 - The word "availability" is the most frequently used word in the pandemic category. Given the Twitter data was pulled from first and second week of May 2021, it makes sense since the country is going through mass vaccine distribution efforts.
 
-- Words about the criminal justice system, "police", "justice", "officers" appeared in top 30 of the "Being Black" category. This tells us how the black experience during the pandemic has not only been about combating health issues but also fighting against institutionalized racism, police brutality, medical bias, and so much more. The current civil unrest is deeply connected to the racial disparities that have been brutally exposed by the coronavirus crisis. This textual data finding supports American Psychological Association (APA) President Sandra L. Shullman's comment that "we are living in a [racism pandemic](https://www.apa.org/news/press/releases/2020/05/racism-pandemic)." For Blacks, they are going through a pandemic on a pandemic.  
+- Words related to the criminal justice system (e.g., "police", "justice", "officers") appeared in top 30 of the "Being Black" category. This tells us how the black experience during the pandemic has not only been about combating health issues but also fighting against institutionalized racism, police brutality, medical bias, and so much more. The current civil unrest is deeply connected to the racial disparities that have been brutally exposed by the coronavirus crisis. This textual data finding supports American Psychological Association (APA) President Sandra L. Shullman's comment that "we are living in a [racism pandemic](https://www.apa.org/news/press/releases/2020/05/racism-pandemic)." For Blacks, they are going through a pandemic on a pandemic.  
+
+- The word "im" is part of the top 20 in all three categories. It tells us that many users are tweeting about their *personal* experiences or opinions on the pandemic and issues/current events related to anti-Asian and anti-Black racism. Racially charged, disturbing, and upsetting incidents have startlingly increased in the past year during the pandemic. Twitter users have taken advantage of Twitter's platform to vocalize about these incidences, processing their experiences instantaneously and packing life into 280-character tweets as they lived it. The fun of Twitter is its opportunity for self-expression: thoughts are externalized, and feelings are reflected upon.
 
 - In "Being Asian" category, "black" appeared in the top 30. Conversely, in the "Being Black" category", "stopasianhate" appeared in the top 30. This shows that the racism is long-lasting, pervasively prominent, and institutionalized in the US. It shows how communities of POC's (people of color) come together to form the Black-Asian solidarity and aims to stand against and ultimately dismantle white supremacy. This finding supports the rise in support towards and participation in the fight for the liberties of all marginalized groups. A Chinese American New York-based fashion designer Dao-Yi Chow, who was one of the organizers of Running to Protest’s “Black & Asian Solidarity” rally, remarks on this [shift occurring in AAPI community](https://time.com/5949926/black-asian-solidarity-white-supremacy/) towards Black-Asian unity. "We have new generations of young people and activities... who are down and will show up for the Black and brown struggle, who will continue to fight for the greater social justice movement not only when we're under attack but when everyone is under attack. 
 
-- The word "im" is part of the top 20 in all three categories. It tells us that many users are tweeting about their *personal* experiences or opinions on the pandemic and issues/current events related to anti-Asian and anti-Black racism. Racially charged, disturbing, and upsetting incidents have startlingly increased in the past year during the pandemic. Twitter users have taken advantage of Twitter's platform to vocalize about these incidences, processing their experiences instantaneously and packing life into 280-character tweets as they lived it. The fun of Twitter is its opportunity for self-expression: thoughts are externalized, and feelings are reflected upon.
+![Source: Brookings article "Why the trope of Black-Asian conflict in the face of anti-Asian violence dismisses solidarity" by Jennifer Lee and Tiffany Huang](images/solidarity.jpeg)
 
 ## Bigram Analysis 
 
@@ -263,12 +271,21 @@ black_bigrams %>%
   theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1)) 
 ```
 
+A few notable observations: 
+
+- The bigram "sore arm" appears as one of the top 15 for the "Pandemic" category. According to the CDC, [sore arm](https://www.cdc.gov/coronavirus/2019-ncov/vaccines/expect/after.html) or muscle pain is one of the possible side effects after getting the COVID-19 vaccine. Given that the country is currently mass distributing vaccines, it makes sense that Twitter users have been tweeting about muscle soreness. 
+
+- Unsurprisingly and most unfortunately, the bigram "hate crimes" appears as one of the top 15 for the "Being Asian" category. [A new study](https://www.cnn.com/2021/05/05/us/anti-asian-hate-crimes-study/index.html) by the Center for the Study of Hate and Extremism at California State University, San Bernardino, finds that reported hate crimes against Asians in 16 of the US largest cities/counties are up 164% since this time last year. Our findings from the digital space of Twitter reflect this trend of incidences happening in the country. 
+
+- The bigram "ding ding" is the most frequent bigram for the "Being Black" category. We tracked down the account [OldMainBell](https://twitter.com/OldMainBell) that has been mass-tweeting the word "ding" alongside the #BlackLivesMatter hashtag. We are puzzled by these tweets and hope to reach out to Penn State to understand the inside joke. 
+
 # Mental Health
-We also studied the emotional impact that COVID-19 MAY have inflicted upon individuals in the United States, based racial group.  We say MAY, mostly because despite the fact that we obtained our data during the “peak” months of the COVID-19 pandemic, there are many other variables/factors that we did not consider that also could have contributed to the emotional toil upon these individuals: economic issues, familial problems, and personal distraught.  
 
-To best apply our analysis to this general issue, we created a Shiny application that enabled us to view diverse relationships between racial groups and the percentage of individuals who have succumbed to depression and/or anxiety.  To visualize these relationships, we created an interactive time series line graph and an interactive bar chart.
+We also studied the emotional impact that COVID-19 MAY have inflicted upon individuals in the United States, based racial group. We say MAY, mostly because despite the fact that we obtained our data during the “peak” months of the COVID-19 pandemic, there are many other variables/factors that we did not consider that also could have contributed to the emotional toil upon these individuals: economic issues, familial problems, and personal distraught.  
 
-To provide some clarification on a certain variable, “Time Period” represents the time period in which data was collected.  We made sure to collect data from time periods that corresponded to the timeline of the COVID-19 pandemic in the United States.  To define all 28 time periods:
+To best apply our analysis to this general issue, we created a Shiny application that enabled us to view diverse relationships between racial groups and the percentage of individuals who have succumbed to depression and/or anxiety. To visualize these relationships, we created an interactive time series line graph and an interactive bar chart.
+
+To provide some clarification on a certain variable, “Time Period” represents the time period in which data was collected. We made sure to collect data from time periods that corresponded to the timeline of the COVID-19 pandemic in the United States. To define all 28 time periods:
 
 - Time Period 1 = April 23, 2020 - May 5, 2020
 - Time Period 2 = May 7 - May 12
@@ -302,21 +319,31 @@ To provide some clarification on a certain variable, “Time Period” represent
 As we noticed, the CDC left some gaps, most likely due to lack of data to contribute.
 
 When looking at the time series line graph, we noticed peculiar patterns that we deemed were too difficult to tell if they were related to the COVID-19 pandemic.  Some general ideas we took away from this interactive graph, however, included:
-A higher percentage of Hispanic/Latino individuals seemed to be depressed/anxious as we approach present day
-The percentage of White individuals who reported that they were depressed/anxious seemed to rise and dip according to certain time periods
-These rises and dips could be an effect of practically anything
-A higher percentage of Black individuals seemed to be depressed/anxious as we approach present day until we reach Time Period 25
-After Time Period 25, we see a huge dip in percentage of Black individuals who reported to be depressed/anxious.
-Though we are not too sure on what caused this dip, some events that took place during this time included Trump’s second impeachment trial and COVID-19 entering an optimistic rollout stage.
-The percentage of Asians who seemed depressed/anxious seemed to be low in general, despite a spike during Time Period 12.  After some gathering of information, we also concluded that this was the time former President Trump used the words “kung flu” to describe the COVID-19 virus.  Coincidence?  We think not.
 
-When looking at the bar chart, there does not seem to be any correlation between Time Period and percentage of individuals who reported to be depressed or anxious.  We’ve concluded that though the pandemic has certainly affected people emotionally and (unfortunately) for the worse, there are many other factors that we did not take into consideration during our analysis.  There does not seem to be any other conclusive relationships that we have noticed between racial group and Time Period as well.  Different racial groups had different percentages of those depressed at different time periods, which proved to be normal and not surprising at all.
+- A higher percentage of Hispanic/Latino individuals seemed to be depressed/anxious as we approach present day.
+
+- The percentage of White individuals who reported that they were depressed/anxious seemed to rise and dip according to certain time periods. These rises and dips could be an effect of practically anything. 
+
+- A higher percentage of Black individuals seemed to be depressed/anxious as we approach present day until we reach Time Period 25. After Time Period 25, we see a huge dip in percentage of Black individuals who reported to be depressed/anxious. Though we are not too sure on what caused this dip, some events that took place during this time included Trump’s second impeachment trial and COVID-19 entering an optimistic rollout stage.
+
+- The percentage of Asians who seemed depressed/anxious seemed to be low in general, despite a spike during Time Period 12. After some gathering of information, we also concluded that this was the time former President Trump used the words “kung flu” to describe the COVID-19 virus.  Coincidence?  We think not.
+
+When looking at the bar chart, there does not seem to be any correlation between Time Period and percentage of individuals who reported to be depressed or anxious. We’ve concluded that though the pandemic has certainly affected people emotionally and (unfortunately) for the worse, there are many other factors that we did not take into consideration during our analysis. There does not seem to be any other conclusive relationships that we have noticed between racial group and Time Period as well. Different racial groups had different percentages of those depressed at different time periods, which proved to be normal and not surprising at all.
 
 Therefore, though the COVID-19 pandemic has certainly affected people emotionally due to its rapid rampage and huge impact physically upon everyone in the United States, we cannot attribute most cases of depression to the pandemic specifically.
 
-
 [Click here](https://lewis-ayodele.shinyapps.io/MentalHealthBK/) to see our interactive visualizations!
 
+# Limitations
 
+It is important to note that it is hard to come by strong demographic data for asian populations in the US because many national surveys, such as the surveys conducted by Pew Research center, are not conducted in Asian languages, therefore there is a strong non-response bias in our data.
 
+In terms of the Twitter data, we were only able to access the standard API package. This means that we were only able to pull tweets from up to seven days ago. Our initial hope was to do in-depth Twitter analysis on the trends over time since the start of the pandemic, looking at specific key events that happened over the course of the past 15 months (e.g., killing of George Floyd, killing of Breonna Taylor, President Trump calls COVID-19 the “Chinese virus”, distribution of vaccines) and comparing it to what was happening on Twitter. Unfortunately, we were only able to pull our data from early May 2021 and consequently give a specific and narrow snapshot of Twitter during the pandemic. 
 
+In assessing mental health during the COVID-19 pandemic, we ran into some limitations that proved to hinder us. For one thing, while data scraping proved to be relatively easy due to our source being the CDC, we realized that there were some large gaps between time periods.  For example, the latest date of Time Period 21 (December 21, 2020) was about 2 weeks and a half away from the earliest date of Time Period 22 (January 6, 2021). Therefore, these gaps are definitely confounding variables that affected the results shown through our line graph and bar chart.  Another limitation is obviously nonresponse bias, in that the results displayed in our data graphics may be skewed due to underrepresentation of the reality of those affected by depression and anxiety.  Many people may be uncomfortable sharing their intimate experiences, and so we must take into consideration that there may be more individuals who were depressed/anxious than we think during the official time periods.
+
+# Future Directions
+
+In terms of the Twitter analysis, we hope to routinely collect more data as the pandemic progresses to gain a more holistic understanding of the digital space during the pandemic. Another option is to purchase the Premium or Enterprise subscription package to increase the functionality and gain access to the past 30 days of Twitter data or to the full history of Twitter data dependent on the endpoint selected. Once we have more complete data for the question we hope to address, we will conduct in-depth sentimental analysis to examine the trends in public opinion changes over time (e.g., more happiness and joy when vaccines were first approved, fear and sadness when racially charged hate crimes occurred). 
+
+To reiterate, the data about mental health was based upon an experimental data system called the [Household Pulse Survey](https://www.census.gov/programs-surveys/household-pulse-survey/data.html). According to the CDCs, this “20-minute online survey was designed to complement the ability of the federal statistical system to rapidly respond and provide relevant information about the impact of the coronavirus pandemic in the U.S.” In terms of its utilization, we believe that this system was really beneficial in allowing us to conduct the necessary research and analysis that we conveyed through this blog.  We hope that a system such as this one could be used to measure not only anxiety and depression during the coronavirus pandemic in general, but also anxiety and depression during social and political movements. We hope that, though statistics do not reveal the entire story, these types of systems can enable us to view individuals’ emotions and experiences with a higher level of sophistication.  
