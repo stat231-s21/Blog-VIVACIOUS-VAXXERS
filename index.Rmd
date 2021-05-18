@@ -90,17 +90,6 @@ g + geom_bar(stat="identity", width=1) +
 			 title = "Number of bias related incidents",
 			 subtitle = "in 2019",
 			 fill= NULL)
-#police shootings pie chart
-#g2 <- acab %>%
-	#ggplot(aes(x="", y=race, fill=race)) 
-  
-#g2 + geom_bar(stat="identity", width=1) +
-  #coord_polar("y", start=0) +
-#	theme_void() +
-  #labs(title="Number of Police Killings by race",
-       #subtitle = "2020 to 2021",
-			# caption = "A=Asian, B=Black, H=Hispanic,\n N=Native, O=Other, W=White",
-			  #fill= "Race")
 #population pie chart
 g3 <- pop %>%
 	ggplot(aes(x="", y=united_states, fill=fact))
@@ -246,6 +235,7 @@ black_bigrams <- read_csv("data/twitter_data/tweets_black_bigrams.csv")
 ```
 
 ```{r bar charts 2, echo=FALSE, warning=FALSE, message=FALSE}
+#creating bigrams for COVID data
 covid_bigrams %>% 
   top_n(15) %>%
   mutate(bigram = reorder(bigram, n)) %>%
@@ -256,7 +246,7 @@ covid_bigrams %>%
   labs(y = "\n Count", x = "Unique Bigrams", title = "Pandemic") + 
   theme_minimal() + 
   theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1))
-
+#creating bigrams for Asian data
 asian_bigrams %>% 
   top_n(15) %>%
   mutate(bigram = reorder(bigram, n)) %>%
@@ -267,7 +257,7 @@ asian_bigrams %>%
   labs(y = "\n Count", x = "Unique Bigrams", title = "Being Asian") + 
   theme_minimal() + 
   theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1))
-
+#creating bigrams for Black data
 black_bigrams %>% 
   top_n(15) %>%
   mutate(bigram = reorder(bigram, n)) %>%
