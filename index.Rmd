@@ -131,13 +131,21 @@ Twitter API (application programming interfaces) enables programmatic access to 
 
 To access it, users must register an application and permissions are not granted by default as there is an application follow-up that requires additional permissions. The standard Twitter API is free of charge and offers a seven-day endpoint to the tweet searches made. In order to trace back farther than seven-day old tweets, a paid subscription for the Premium or Enterprise subscription package is necessary.
 
+
 ## Word Clouds 
+
+```{r read-in monogram data, echo=FALSE, warning=FALSE, message=FALSE}
+covid_monograms <- read_csv("data/twitter_data/tweets_covid_monograms.csv")
+asian_monograms <- read_csv("data/twitter_data/tweets_asian_monograms.csv")
+black_monograms <- read_csv("data/twitter_data/tweets_black_monograms.csv")
+```
 
 ### Tweets related to generally about COVID 
 ```{r wordclouds, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(1234)
+
 # Show the most frequent words associated with the pandemic 
-wordcloud(covid_exp$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+wordcloud(covid_monograms$word, min.freq=10, max.words = 100, scale=c(2, .5), 
           random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
 ```
 
@@ -146,7 +154,7 @@ wordcloud(covid_exp$word, min.freq=10, max.words = 100, scale=c(2, .5),
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(1234)
 # Show the most frequent words associated with the Asian American experience 
-wordcloud(asian_exp$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+wordcloud(asian_monograms$word, min.freq=10, max.words = 100, scale=c(2, .5), 
           random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
 ```
 
@@ -155,8 +163,104 @@ wordcloud(asian_exp$word, min.freq=10, max.words = 100, scale=c(2, .5),
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 set.seed(1234)
 # Show the most frequent words associated with the Black experience 
-wordcloud(black_exp$word, min.freq=10, max.words = 100, scale=c(2, .5), 
+wordcloud(black_monograms$word, min.freq=5, max.words = 50, scale=c(2, .5), 
           random.order=FALSE, rot.per=0.25, colors=brewer.pal(15, "Dark2"))
+```
+
+### Quantification via Bar Chart Frequencies
+
+```{r bar charts, echo=FALSE, warning=FALSE, message=FALSE}
+# gives you a bar chart of the most frequent words found in the tweets
+covid_bar <- covid_monograms %>% 
+  count(word, sort = TRUE) %>%
+  top_n(30) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(x = word, y = n)) +
+  geom_col(fill = "blue") +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "\n Count", x = "Unique words", title = "Pandemic") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1))
+
+asian_bar <- asian_monograms %>% 
+  count(word, sort = TRUE) %>%
+  top_n(30) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(x = word, y = n)) +
+  geom_col(fill = "purple") +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "\n Count", x = "Unique words", title = "Being Asian") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1))
+
+black_bar <- black_monograms %>% 
+  count(word, sort = TRUE) %>%
+  top_n(30) %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(x = word, y = n)) +
+  geom_col(fill = "darkgreen") +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "\n Count", x = "Unique words", title = "Being Black") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1)) 
+
+gridExtra::grid.arrange(covid_bar, asian_bar, black_bar, ncol=3)
+```
+
+A few interesting observations: 
+
+- The word "availability" is the most frequently used word in the pandemic category. Given the Twitter data was pulled from first and second week of May 2021, it makes sense since the country is going through mass vaccine distribution efforts.
+
+- Words about the criminal justice system, "police", "justice", "officers" appeared in top 30 of the "Being Black" category. This tells us how the black experience during the pandemic has not only been about combating health issues but also fighting against institutionalized racism, police brutality, medical bias, and so much more. The current civil unrest is deeply connected to the racial disparities that have been brutally exposed by the coronavirus crisis. This textual data finding supports American Psychological Association (APA) President Sandra L. Shullman's comment that "we are living in a [racism pandemic](https://www.apa.org/news/press/releases/2020/05/racism-pandemic)." For Blacks, they are going through a pandemic on a pandemic.  
+
+- In "Being Asian" category, "black" appeared in the top 30. Conversely, in the "Being Black" category", "stopasianhate" appeared in the top 30. This shows that the racism is long-lasting, pervasively prominent, and institutionalized in the US. It shows how communities of POC's (people of color) come together to form the Black-Asian solidarity and aims to stand against and ultimately dismantle white supremacy. This finding supports the rise in support towards and participation in the fight for the liberties of all marginalized groups. A Chinese American New York-based fashion designer Dao-Yi Chow, who was one of the organizers of Running to Protest’s “Black & Asian Solidarity” rally, remarks on this [shift occurring in AAPI community](https://time.com/5949926/black-asian-solidarity-white-supremacy/) towards Black-Asian unity. "We have new generations of young people and activities... who are down and will show up for the Black and brown struggle, who will continue to fight for the greater social justice movement not only when we're under attack but when everyone is under attack. 
+
+- The word "im" is part of the top 20 in all three categories. It tells us that many users are tweeting about their *personal* experiences or opinions on the pandemic and issues/current events related to anti-Asian and anti-Black racism. Racially charged, disturbing, and upsetting incidents have startlingly increased in the past year during the pandemic. Twitter users have taken advantage of Twitter's platform to vocalize about these incidences, processing their experiences instantaneously and packing life into 280-character tweets as they lived it. The fun of Twitter is its opportunity for self-expression: thoughts are externalized, and feelings are reflected upon.
+
+## Bigram Analysis 
+
+```{r read-in bigram data, echo=FALSE, warning=FALSE, message=FALSE}
+covid_bigrams <- read_csv("data/twitter_data/tweets_covid_bigrams.csv")
+asian_bigrams <- read_csv("data/twitter_data/tweets_asian_bigrams.csv")
+black_bigrams <- read_csv("data/twitter_data/tweets_black_bigrams.csv")
+```
+
+```{r bar charts 2, echo=FALSE, warning=FALSE, message=FALSE}
+covid_bigrams %>% 
+  top_n(15) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(x = bigram, y = n)) +
+  geom_col(fill = "blue") +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "\n Count", x = "Unique Bigrams", title = "Pandemic") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1))
+
+asian_bigrams %>% 
+  top_n(15) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(x = bigram, y = n)) +
+  geom_col(fill = "purple") +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "\n Count", x = "Unique Bigrams", title = "Being Asian") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1))
+
+black_bigrams %>% 
+  top_n(15) %>%
+  mutate(bigram = reorder(bigram, n)) %>%
+  ggplot(aes(x = bigram, y = n)) +
+  geom_col(fill = "darkgreen") +
+  xlab(NULL) +
+  coord_flip() +
+  labs(y = "\n Count", x = "Unique Bigrams", title = "Being Black") + 
+  theme_minimal() + 
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.5, hjust=1)) 
 ```
 
 # Mental Health

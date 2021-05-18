@@ -1,0 +1,433 @@
+---
+title: "twitter_data_wrangling"
+author: "Ayo Lewis, Brandon Kwon, and Clara Seo"
+date: "5/17/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(mosaic)
+library(dplyr)
+library(tidyverse)
+library(tidytext)
+library(janitor)
+library(wordcloud)
+library(textdata)
+library(readr)
+library(rtweet) # extract tweets
+```
+
+## Mining Tweets
+
+```{r twitter token}
+# set up authentication to connect to Twitter
+twitter_token <- create_token(
+  app = "VivaciousVaxxers",
+  consumer_key = "FMy4Oep9T9VyFwsZwECghMqDX", 
+  consumer_secret = "6PkoT9GDZmnQDMibI4ZwegqsvmNR8mZ7n1YgkLIJ1ta5OriA62",
+  access_token = "1608462002-eFkTlANzGoT8SVYVB1ICXmHD7fXUSZHJK99iNCy",
+  access_secret = "ru4laGquGEb5ebn8ATSg9vLEvkEClg2dGm75lCcI9dd25", 
+  set_renv = TRUE)
+```
+
+```{r search_tweets, eval=FALSE, include=FALSE, echo=FALSE, message=FALSE, warning=FALSE}
+# search for tweets, save as csv files 
+
+#johnson <- search_tweets("#johnson", n=18000, include_rts=FALSE, lang="en")
+johnson <- select(johnson, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(johnson, file = "data/twitter_data/twitter_johnson.csv")
+
+#vaccine <- search_tweets("vaccine", n=18000, include_rts=FALSE, lang="en")
+vaccine <- select(vaccine, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(vaccine, file = "data/twitter_data/twitter_vaccine.csv")
+
+#covid19 <- search_tweets("#covid19", n=18000, include_rts=FALSE, lang="en")
+covid19 <- select(covid19, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(covid19, file = "data/twitter_data/twitter_covid19.csv")
+
+#coronavirus <- search_tweets("#coronavirus", n=18000, include_rts=FALSE, lang="en")
+coronavirus <- select(coronavirus, 
+                      user_id, status_id, created_at, screen_name, text, source,
+                      display_text_width, reply_to_status_id, reply_to_user_id,
+                      reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                      retweet_count, quote_count, reply_count)
+write_csv(coronavirus, file = "data/twitter_data/twitter_coronavirus.csv")
+
+#asianheritagemonth <- search_tweets("#AsianHeritageMonth", n=2274, include_rts=FALSE, lang="en")
+asianheritagemonth <- select(asianheritagemonth, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(asianheritagemonth, file = "data/twitter_data/twitter_asianheritagemonth.csv")
+
+#blacklivesmatter <- search_tweets("#BlackLivesMatter", n=18000, include_rts=FALSE, lang="en")
+blacklivesmatter <- select(blacklivesmatter, 
+              user_id, status_id, created_at, screen_name, text, source,
+              display_text_width, reply_to_status_id, reply_to_user_id,
+              reply_to_screen_name, is_quote, is_retweet, favorite_count,
+              retweet_count, quote_count, reply_count)
+write_csv(blacklivesmatter, file = "data/twitter_data/twitter_blacklivesmatter.csv")
+
+#blm <- search_tweets("#BLM", n=7397, include_rts=FALSE, lang="en")
+blm <- select(blm, 
+              user_id, status_id, created_at, screen_name, text, source,
+              display_text_width, reply_to_status_id, reply_to_user_id,
+              reply_to_screen_name, is_quote, is_retweet, favorite_count,
+              retweet_count, quote_count, reply_count)
+write_csv(blm, file = "data/twitter_data/twitter_blm.csv")
+
+#stopaapihate <- search_tweets("#StopAAPIHate", n=2538, include_rts=FALSE, lang="en")
+stopaapihate <- select(stopaapihate, 
+                      user_id, status_id, created_at, screen_name, text, source,
+                      display_text_width, reply_to_status_id, reply_to_user_id,
+                      reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                      retweet_count, quote_count, reply_count)
+write_csv(stopaapihate, file = "data/twitter_data/twitter_stopaapihate.csv")
+
+#supportblackbusiness <- search_tweets("#SupportBlackBusiness", n=729, include_rts=FALSE, lang="en")
+supportblackbusiness <- select(supportblackbusiness, 
+                              user_id, status_id, created_at, screen_name, text, source,
+                              display_text_width, reply_to_status_id, reply_to_user_id,
+                              reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                              retweet_count, quote_count, reply_count)
+write_csv(supportblackbusiness, file = "data/twitter_data/twitter_supportblackbusiness.csv")
+
+#socialdistancing <- search_tweets("#SocialDistancing", n=3372, include_rts=FALSE, lang="en")
+socialdistancing <- select(socialdistancing, 
+                          user_id, status_id, created_at, screen_name, text, source,
+                          display_text_width, reply_to_status_id, reply_to_user_id,
+                          reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                          retweet_count, quote_count, reply_count)
+write_csv(socialdistancing, file = "data/twitter_data/twitter_socialdistancing.csv")
+
+#wuhanvirus <- search_tweets("#WuhanVirus", n=2341, include_rts=FALSE, lang="en")
+wuhanvirus <- select(wuhanvirus, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(wuhanvirus, file = "data/twitter_data/twitter_wuhanvirus.csv")
+
+#sayhisname <- search_tweets("#SayHisName", n=223, include_rts=FALSE, lang="en")
+sayhisname <- select(sayhisname, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(sayhisname, file = "data/twitter_data/twitter_sayhisname.csv")
+
+#sayhername <- search_tweets("#SayHerName", n=474, include_rts=FALSE, lang="en")
+sayhername <- select(sayhername, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(sayhername, file = "data/twitter_data/twitter_sayhername.csv")
+
+#georgefloyd <- search_tweets("#GeorgeFloyd", n=2492, include_rts=FALSE, lang="en")
+georgefloyd <- select(georgefloyd, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(georgefloyd, file = "data/twitter_data/twitter_georgefloyd.csv")
+
+#breonnataylor <- search_tweets("#BreonnaTaylor", n=534, include_rts=FALSE, lang="en")
+breonnataylor <- select(breonnataylor, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(breonnataylor, file = "data/twitter_data/twitter_breonnataylor.csv")
+
+#aapivisibility <- search_tweets("#AAPIVisibility", n=101, include_rts=FALSE, lang="en")
+aapivisibility <- select(aapivisibility, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(aapivisibility, file = "data/twitter_data/twitter_aapivisibility.csv")
+
+#chinavirus <- search_tweets("#ChinaVirus", n=1616, include_rts=FALSE, lang="en")
+chinavirus <- select(chinavirus, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(chinavirus, file = "data/twitter_data/twitter_chinavirus.csv")
+
+#flattenthecurve <- search_tweets("#FlattenTheCurve", n=571, include_rts=FALSE, lang="en")
+flattenthecurve <- select(flattenthecurve, 
+                         user_id, status_id, created_at, screen_name, text, source,
+                         display_text_width, reply_to_status_id, reply_to_user_id,
+                         reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                         retweet_count, quote_count, reply_count)
+write_csv(flattenthecurve, file = "data/twitter_data/twitter_flattenthecurve.csv")
+
+#moderna <- search_tweets("moderna", n=18000, include_rts=FALSE, lang="en")
+moderna <- select(moderna, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(moderna, file = "data/twitter_data/twitter_moderna.csv")
+
+#pfizer <- search_tweets("pfizer", n=18000, include_rts=FALSE, lang="en")
+pfizer <- select(pfizer, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(pfizer, file = "data/twitter_data/twitter_pfizer.csv")
+
+#stayathome <- search_tweets("#StayAtHome", n=2172, include_rts=FALSE, lang="en")
+stayathome <- select(stayathome, 
+                     user_id, status_id, created_at, screen_name, text, source,
+                     display_text_width, reply_to_status_id, reply_to_user_id,
+                     reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                     retweet_count, quote_count, reply_count)
+write_csv(stayathome, file = "data/twitter_data/twitter_stayathome.csv")
+
+#pandemic <- search_tweets("pandemic", n=18000, include_rts=FALSE, lang="en")
+pandemic <- select(pandemic, 
+                  user_id, status_id, created_at, screen_name, text, source,
+                  display_text_width, reply_to_status_id, reply_to_user_id,
+                  reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                  retweet_count, quote_count, reply_count)
+write_csv(pandemic, file = "data/twitter_data/twitter_pandemic.csv")
+
+#racism <- search_tweets("racism", n=1000, include_rts=FALSE, lang="en")
+racism <- select(racism, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(racism, file = "data/twitter_data/twitter_racism.csv")
+
+#covid <- search_tweets("covid", n=4999, include_rts=FALSE, lang="en")
+covid <- select(covid, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(covid, file = "data/twitter_data/twitter_covid.csv")
+
+#stopasianhate <- search_tweets("#StopAsianHate", n=10603, include_rts=FALSE, lang="en")
+stopasianhate <- select(stopasianhate, 
+                        user_id, status_id, created_at, screen_name, text, source,
+                        display_text_width, reply_to_status_id, reply_to_user_id,
+                        reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                        retweet_count, quote_count, reply_count)
+write_csv(stopasianhate, file = "data/twitter_data/twitter_stopasianhate.csv")
+
+#solidarity <- search_tweets("solidarity", n=18000, include_rts=FALSE, lang="en")
+solidarity <- select(solidarity, 
+                user_id, status_id, created_at, screen_name, text, source,
+                display_text_width, reply_to_status_id, reply_to_user_id,
+                reply_to_screen_name, is_quote, is_retweet, favorite_count,
+                retweet_count, quote_count, reply_count)
+write_csv(solidarity, file = "data/twitter_data/twitter_solidarity.csv")
+```
+
+```{r read-in twitter data, echo=FALSE, include=FALSE, message=FALSE, warning=FALSE}
+aapivisibility <- read_csv("data/twitter_data/twitter_aapivisibility.csv")
+asianheritagemonth <- read_csv("data/twitter_data/twitter_asianheritagemonth.csv")
+blm <- read_csv("data/twitter_data/twitter_blm.csv")
+blacklivesmatter <- read_csv("data/twitter_data/twitter_blacklivesmatter.csv")
+breonnataylor <- read_csv("data/twitter_data/twitter_breonnataylor.csv")
+coronavirus <- read_csv("data/twitter_data/twitter_coronavirus.csv")
+chinavirus <- read_csv("data/twitter_data/twitter_chinavirus.csv")
+covid <- read_csv("data/twitter_data/twitter_covid.csv")
+covid19 <- read_csv("data/twitter_data/twitter_covid19.csv")
+flattenthecurve <- read_csv("data/twitter_data/twitter_flattenthecurve.csv")
+georgefloyd <- read_csv("data/twitter_data/twitter_georgefloyd.csv")
+johnson <- read_csv("data/twitter_data/twitter_johnson.csv")
+moderna <- read_csv("data/twitter_data/twitter_moderna.csv")
+pandemic <- read_csv("data/twitter_data/twitter_pandemic.csv")
+pfizer <- read_csv("data/twitter_data/twitter_pfizer.csv")
+racism <- read_csv("data/twitter_data/twitter_racism.csv")
+sayhername <- read_csv("data/twitter_data/twitter_sayhername.csv")
+sayhisname <- read_csv("data/twitter_data/twitter_sayhisname.csv")
+socialdistancing <- read_csv("data/twitter_data/twitter_socialdistancing.csv")
+solidarity <- read_csv("data/twitter_data/twitter_solidarity.csv")
+stayathome <- read_csv("data/twitter_data/twitter_stayathome.csv")
+stopaapihate <- read_csv("data/twitter_data/twitter_stopaapihate.csv")
+stopasianhate <- read_csv("data/twitter_data/twitter_stopasianhate.csv")
+supportblackbusiness <- read_csv("data/twitter_data/twitter_supportblackbusiness.csv")
+wuhanvirus <- read_csv("data/twitter_data/twitter_wuhanvirus.csv")
+vaccine <- read_csv("data/twitter_data/twitter_vaccine.csv")
+```
+
+```{r combine twitter data}
+covid_exp <- rbind.data.frame(covid, wuhanvirus, chinavirus, flattenthecurve, socialdistancing,
+                              pfizer, johnson, moderna, stayathome, coronavirus,
+                              covid19, vaccine)
+black_exp <- rbind.data.frame(blm, breonnataylor, georgefloyd, racism, solidarity, sayhername, 
+                          sayhisname, supportblackbusiness, blacklivesmatter)
+
+asian_exp <- rbind.data.frame(stopasianhate, chinavirus, aapivisibility, stopaapihate, 
+                          racism, solidarity, asianheritagemonth)
+```
+
+```{r clean_tweets function}
+# Function that cleans up the tweets
+clean_tweets <- function(text) {
+  # Eliminate URLs
+  text <- gsub("https\\S*", "", text)
+  text <- gsub("tco", "", text)
+  text <- gsub(" ?(f|ht)(tp)(s?)(://)(.*)[.|/](.*)", "", text)
+
+  # Remove references to other twitter users 
+  text <- gsub("@\\S*", "", text) 
+  text <- gsub("@\\w+", "", text)
+  
+  # Remove extraneous things that are not part of the tweet
+  text <- gsub("amp;", "", text)
+  text <- gsub("\\n", "", text)
+  text <- gsub("[\r\n]", "", text)
+
+  # Eliminate punctuation
+  text <- gsub("[[:punct:]]", "", text)
+  
+  # Remove extra characters
+  text <- gsub("[^[:alpha:][:space:]]*", "", text)
+  
+  # Eliminate unnecessary space first
+  text <- gsub('{2,}', "", text)
+  
+  # Convert to lower case
+  text <- sapply(text, tolower)
+}
+
+covid_exp$text <- clean_tweets(covid_exp$text)
+black_exp$text <- clean_tweets(black_exp$text)
+asian_exp$text <- clean_tweets(asian_exp$text)
+```
+
+```{r}
+write_csv(covid_exp, file = "data/twitter_data/tweets_covid_exp.csv")
+write_csv(asian_exp, file = "data/twitter_data/tweets_asian_exp.csv")
+write_csv(black_exp, file = "data/twitter_data/tweets_black_exp.csv")
+```
+
+
+### STOP WORDS
+```{r stop words}
+data(stop_words)
+
+# more words to exclude
+covid_exp1 <- c("covid", "wuhanvirus", "chinavirus", "flattenthecurve", "moderna",
+                "pfizer", "johnson", "socialdistancing", "stayathome", "vaccine",
+                "stayathome", "coronavirus", "covid19") %>% 
+  as.data.frame() %>% rename(word = ".")
+
+asian1 <- c("stopasianhate", "stopaapihate", "stopasianhatecrimes", "stopaapihate",
+            "chinavirus", "hatestopasianhatestopasianhatecrimes", "asian", 
+            "asianheritagemonth", "racism", "solidarity", "aapivisibility") %>% 
+  as.data.frame() %>% rename(word = ".")
+
+asian2 <- c("limengyanyanlimeng", "limeng", "limengyan", "bannondrlimengyan", "drlimengyan",
+           "yan", "wengui", "guo", "bannon") %>% 
+  as.data.frame() %>% rename(word = ".")
+
+black1 <- c("blacklivesmatter", "blm", "georgefloyd", "breonnataylor", "supportblackbusiness",
+            "george", "floyd", "breonna", "taylor", "racism", "solidarity",
+            "sayhername", "sayhisname") %>% 
+  as.data.frame() %>% rename(word = ".")
+```
+
+### MONOGRAMS
+```{r}
+covid_words <- covid_exp %>%
+  select(text) %>%
+  unnest_tokens(word, text) %>% 
+  anti_join(stop_words, by = "word") %>% 
+  anti_join(covid_exp1, by = "word")
+
+asian_words <- asian_exp %>%
+  select(text) %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words, by = "word") %>% 
+  anti_join(asian1, by = "word") %>% 
+  anti_join(asian2, by = "word")
+
+black_words <- black_exp %>%
+  select(text) %>%
+  unnest_tokens(word, text) %>%
+  anti_join(stop_words, by = "word") %>% 
+  anti_join(black1, by = "word")
+
+write_csv(covid_words, file = "data/twitter_data/tweets_covid_monograms.csv")
+write_csv(asian_words, file = "data/twitter_data/tweets_asian_monograms.csv")
+write_csv(black_words, file = "data/twitter_data/tweets_black_monograms.csv")
+```
+
+
+### BIGRAMS
+```{r}
+covid_bigrams <- covid_exp %>%
+  select(text) %>%
+  
+  # generate list of bigrams 
+  unnest_tokens(output = bigram, input = text, token = "ngrams", n = 2) %>% 
+  
+  # take out stopwords in bigrams 
+  separate(bigram, into = c("first","second"), sep = " ", remove = FALSE) %>%
+  anti_join(stop_words, by = c("first" = "word")) %>%
+  anti_join(stop_words, by = c("second" = "word")) %>%
+  
+  anti_join(covid_exp1, by = c("first" = "word")) %>%
+  anti_join(covid_exp1, by = c("second" = "word")) %>%
+  
+  # filter out any punctuations
+  filter(str_detect(first, "[a-z]") & str_detect(second, "[a-z]")) %>% 
+  
+  # count the number of repeats of each unique bigram 
+  count(bigram, sort = TRUE)
+
+asian_bigrams <- asian_exp %>%
+  select(text) %>%
+  unnest_tokens(output = bigram, input = text, token = "ngrams", n = 2) %>% 
+  
+  separate(bigram, into = c("first","second"), sep = " ", remove = FALSE) %>%
+  anti_join(stop_words, by = c("first" = "word")) %>%
+  anti_join(stop_words, by = c("second" = "word")) %>%
+  anti_join(asian1, by = c("first" = "word")) %>%
+  anti_join(asian1, by = c("second" = "word")) %>%
+  anti_join(asian2, by = c("first" = "word")) %>%
+  anti_join(asian2, by = c("second" = "word")) %>%
+  
+  filter(str_detect(first, "[a-z]") & str_detect(second, "[a-z]")) %>% 
+  count(bigram, sort = TRUE)
+
+black_bigrams <- black_exp %>%
+  select(text) %>%
+  unnest_tokens(output = bigram, input = text, token = "ngrams", n = 2) %>% 
+  
+  separate(bigram, into = c("first","second"), sep = " ", remove = FALSE) %>%
+  anti_join(stop_words, by = c("first" = "word")) %>%
+  anti_join(stop_words, by = c("second" = "word")) %>%
+  anti_join(black1, by = c("first" = "word")) %>%
+  anti_join(black1, by = c("second" = "word")) %>%
+  filter(str_detect(first, "[a-z]") & str_detect(second, "[a-z]")) %>% 
+  count(bigram, sort = TRUE)
+
+write_csv(covid_bigrams, file = "data/twitter_data/tweets_covid_bigrams.csv")
+write_csv(asian_bigrams, file = "data/twitter_data/tweets_asian_bigrams.csv")
+write_csv(black_bigrams, file = "data/twitter_data/tweets_black_bigrams.csv")
+```
+
